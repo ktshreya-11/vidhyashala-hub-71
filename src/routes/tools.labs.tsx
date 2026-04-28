@@ -46,7 +46,7 @@ function Labs() {
     <div className="flex min-h-screen flex-col bg-background">
       <TopNav />
       <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-12">
-        <BackButton fallback="/" />
+        <BackButton variant="light" />
         <h1 className="mt-4 flex items-center gap-3 font-display text-4xl font-bold">
           <FlaskConical className="h-8 w-8 text-primary" /> Labs
         </h1>
