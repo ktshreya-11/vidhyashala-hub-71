@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/react-router";
-import { Send, Youtube, Instagram, Facebook, Linkedin, Mail, GraduationCap } from "lucide-react";
+import { Linkedin, Instagram, Facebook, Mail, MessageCircle, GraduationCap } from "lucide-react";
 
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
@@ -8,68 +7,50 @@ const XIcon = ({ className }: { className?: string }) => (
 );
 
 const socials = [
-  { name: "Telegram", icon: Send, href: "#" },
-  { name: "YouTube", icon: Youtube, href: "#" },
-  { name: "Instagram", icon: Instagram, href: "#" },
-  { name: "Facebook", icon: Facebook, href: "#" },
-  { name: "X", icon: XIcon, href: "#" },
-  { name: "LinkedIn", icon: Linkedin, href: "#" },
-  { name: "Email", icon: Mail, href: "mailto:hello@vidyashala.com" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+  { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
+  { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
+  { name: "X", icon: XIcon, href: "https://x.com" },
+  { name: "Gmail", icon: Mail, href: "mailto:hello@vidyashala.com" },
+  { name: "Contact Me", icon: MessageCircle, href: "mailto:hello@vidyashala.com?subject=Hello%20Vidyashala" },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-border/50 bg-card/50">
-      <div className="mx-auto max-w-7xl px-6 py-14">
-        <div className="grid gap-10 md:grid-cols-4">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
-                <GraduationCap className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-display text-2xl font-bold">Vidyashala</span>
-            </div>
-            <p className="mt-4 max-w-md text-sm text-muted-foreground">
-              The hub where curious students meet collaborative learning, career simulations, and
-              real mentorship. Build your future, together.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {socials.map(({ name, icon: Icon, href }) => (
-                <a
-                  key={name}
-                  href={href}
-                  aria-label={name}
-                  className="group flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-gradient-primary hover:shadow-glow"
-                >
-                  <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary-foreground" />
-                </a>
-              ))}
-            </div>
+    <footer className="relative mt-24 border-t border-border/50 bg-card/40 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-10 md:flex-row md:justify-between">
+        <div className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
+            <GraduationCap className="h-5 w-5 text-primary-foreground" />
           </div>
-
-          <div>
-            <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">Explore</h4>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li><Link to="/" className="transition-colors hover:text-primary">Home</Link></li>
-              <li><Link to="/about" className="transition-colors hover:text-primary">About Us</Link></li>
-              <li><Link to="/dashboard" className="transition-colors hover:text-primary">Dashboard</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">Resources</h4>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li><Link to="/tools/notebook" className="transition-colors hover:text-primary">Notebook</Link></li>
-              <li><Link to="/tools/labs" className="transition-colors hover:text-primary">Labs</Link></li>
-              <li><Link to="/feedback" className="transition-colors hover:text-primary">Feedback</Link></li>
-            </ul>
-          </div>
+          <span className="font-display text-lg font-bold">Vidyashala</span>
+          <span className="ml-3 hidden text-xs text-muted-foreground md:inline">
+            © {new Date().getFullYear()} · Built for learners.
+          </span>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/50 pt-6 text-xs text-muted-foreground md:flex-row">
-          <p>© {new Date().getFullYear()} Vidyashala Hub. All rights reserved.</p>
-          <p>Crafted for the next generation of learners.</p>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {socials.map(({ name, icon: Icon, href }) => (
+            <a
+              key={name}
+              href={href}
+              target={href.startsWith("mailto") ? undefined : "_blank"}
+              rel="noreferrer"
+              aria-label={name}
+              title={name}
+              className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-gradient-primary hover:shadow-glow"
+            >
+              <Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary-foreground" />
+              <span className="pointer-events-none absolute -top-8 whitespace-nowrap rounded-md bg-foreground px-2 py-0.5 text-[10px] font-medium text-background opacity-0 transition-opacity group-hover:opacity-100">
+                {name}
+              </span>
+            </a>
+          ))}
         </div>
+      </div>
+
+      <div className="border-t border-border/50 px-6 py-3 text-center text-[11px] text-muted-foreground md:hidden">
+        © {new Date().getFullYear()} Vidyashala Hub
       </div>
     </footer>
   );

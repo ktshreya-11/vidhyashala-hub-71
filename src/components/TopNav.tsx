@@ -1,18 +1,10 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Search, Bell, Sun, Moon, GraduationCap, ArrowRight } from "lucide-react";
+import { Menu, Search, Bell, Sun, Moon, GraduationCap, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/hooks/use-theme";
-
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About Us" },
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/tools/notebook", label: "Notebook" },
-  { to: "/tools/labs", label: "Labs" },
-  { to: "/feedback", label: "Feedback" },
-] as const;
+import { SidebarNav } from "@/components/SidebarNav";
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
@@ -22,12 +14,12 @@ export function TopNav() {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 md:px-6">
-          {/* Left: Logo + Hamburger */}
+          {/* Left: Hamburger + Logo */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-accent"
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground transition-all hover:bg-accent hover:scale-105"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -60,7 +52,8 @@ export function TopNav() {
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
             <Button className="rounded-full bg-gradient-primary px-4 font-semibold text-primary-foreground shadow-glow hover:opacity-90 hover:shadow-elegant">
-              Get Started
+              <span className="hidden sm:inline">Get Started</span>
+              <span className="sm:hidden">Start</span>
               <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </div>
@@ -75,47 +68,7 @@ export function TopNav() {
         </div>
       </header>
 
-      {/* Full-screen overlay nav */}
-      {open && (
-        <div className="fixed inset-0 z-50 animate-fade-up bg-gradient-hero">
-          <div className="absolute inset-0 bg-gradient-glow opacity-60" />
-          <div className="relative mx-auto flex h-full max-w-7xl flex-col px-6 py-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
-                  <GraduationCap className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <span className="font-display text-xl font-bold text-white">Vidyashala</span>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                aria-label="Close menu"
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            <nav className="flex flex-1 flex-col items-center justify-center gap-6">
-              {navLinks.map((l, i) => (
-                <Link
-                  key={l.to}
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className="font-display text-3xl font-bold text-white/80 transition-all hover:text-white hover:tracking-wider md:text-5xl"
-                  style={{ animation: `fade-up 0.5s ${i * 0.1}s both` }}
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="text-center text-sm text-white/60">
-              Empowering students with collaborative learning hubs.
-            </div>
-          </div>
-        </div>
-      )}
+      <SidebarNav open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
