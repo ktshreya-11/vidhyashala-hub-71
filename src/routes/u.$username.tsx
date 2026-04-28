@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
-import { ArrowLeft, MapPin, Calendar, Award } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
+import { MapPin, Calendar, Award } from "lucide-react";
 import { USERS, SEED_POSTS, type FeedbackUser } from "@/data/feedback";
 
 export const Route = createFileRoute("/u/$username")({
@@ -53,9 +54,7 @@ function Profile() {
             }}
           />
           <div className="relative mx-auto max-w-4xl px-6 pt-6">
-            <Link to="/feedback" className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white">
-              <ArrowLeft className="h-4 w-4" /> Back to wall
-            </Link>
+            <BackButton fallback="/feedback" label="Back" />
           </div>
         </section>
 

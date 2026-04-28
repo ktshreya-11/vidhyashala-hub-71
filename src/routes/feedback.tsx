@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
+import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Heart, MessageCircle, Share2, Sparkles } from "lucide-react";
@@ -51,10 +52,11 @@ function Feedback() {
     <div className="flex min-h-screen flex-col bg-background">
       <TopNav />
       <main className="flex-1">
-        <section className="border-b border-border bg-gradient-hero py-14">
-          <div className="absolute inset-x-0 bg-gradient-glow" />
+        <section className="relative overflow-hidden border-b border-border bg-gradient-hero py-14">
+          <div className="absolute inset-0 bg-gradient-glow opacity-60" />
           <div className="relative mx-auto max-w-3xl px-6 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">
+            <div className="flex justify-center"><BackButton /></div>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">
               <Sparkles className="h-3 w-3" /> Community Wall
             </div>
             <h1 className="mt-4 font-display text-4xl font-bold text-white md:text-5xl">Real stories. Real people.</h1>

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Code2, ShieldCheck, Briefcase, Radio, ArrowUpRight } from "lucide-react";
+import { Code2, ShieldCheck, Briefcase, Radio, Compass, ArrowUpRight } from "lucide-react";
 
 const paths = [
   {
@@ -7,32 +7,40 @@ const paths = [
     icon: Code2,
     title: "DSA Lab",
     tag: "Coding",
-    desc: "Solve problems in a built-in VS Code editor with multi-language support — LeetCode-style, in your hub.",
+    desc: "Solve Easy/Medium/Hard problems in a built-in IDE. Submit and watch them mark complete.",
     accent: "from-primary to-primary-glow",
+  },
+  {
+    to: "/paths/career-sim",
+    icon: Compass,
+    title: "Career Sim",
+    tag: "Discover",
+    desc: "Explore real career paths and collect verifiable, on-chain badges as you grow.",
+    accent: "from-primary-glow to-primary",
   },
   {
     to: "/paths/blockchain-badging",
     icon: ShieldCheck,
     title: "Blockchain Badging",
     tag: "Verification",
-    desc: "Upload your badge URLs, save them on-chain, and verify their authenticity in one click.",
-    accent: "from-primary-glow to-primary",
+    desc: "Mint, save, and verify your achievement URLs with tamper-proof on-chain hashes.",
+    accent: "from-primary to-primary-glow",
   },
   {
     to: "/paths/industry-link",
     icon: Briefcase,
     title: "Industry Link",
     tag: "Mentorship",
-    desc: "Professionals post real-world tasks. Students browse, submit, and track progress with reviews.",
-    accent: "from-primary to-primary-glow",
+    desc: "Pros post real tasks. Students submit, track, and get reviewed in a clean dashboard.",
+    accent: "from-primary-glow to-primary",
   },
   {
     to: "/paths/live-collaboration",
     icon: Radio,
     title: "Live Collaboration",
     tag: "Teamwork",
-    desc: "Step into a Virtual War-Room — distributed teams plan, build, and ship projects together.",
-    accent: "from-primary-glow to-primary",
+    desc: "Step into a Virtual War-Room — distributed teams plan, build, and ship together.",
+    accent: "from-primary to-primary-glow",
   },
 ] as const;
 
@@ -45,27 +53,25 @@ export function Paths() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-              Explore Paths
+              Core Labs · The Hub
             </div>
             <h2 className="mt-4 font-display text-4xl font-bold md:text-5xl">
-              Four ways to <span className="text-gradient">level up</span>
+              Five ways to <span className="text-gradient">level up</span>
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            Pick a path, dive in, and start building tangible proof of your skills.
+            Pick a path, dive in, and build tangible proof of your skills.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {paths.map(({ to, icon: Icon, title, tag, desc, accent }) => (
             <Link
               key={to}
               to={to}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-card transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-elegant"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-card transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-elegant"
             >
-              {/* glow */}
               <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/20 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-              {/* grid pattern */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-[0.03]"
                 style={{
@@ -84,7 +90,7 @@ export function Paths() {
                 </div>
               </div>
 
-              <div className="relative mt-8">
+              <div className="relative mt-7">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">{tag}</span>
                 <h3 className="mt-2 font-display text-2xl font-bold">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{desc}</p>

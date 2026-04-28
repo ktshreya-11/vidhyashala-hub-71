@@ -1,8 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
 import { FlaskConical, Upload, FileText, Download, Trash2, Tag } from "lucide-react";
 
@@ -46,8 +46,8 @@ function Labs() {
     <div className="flex min-h-screen flex-col bg-background">
       <TopNav />
       <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-12">
-        <Link to="/" className="text-xs text-muted-foreground hover:text-primary">← Home</Link>
-        <h1 className="mt-2 flex items-center gap-3 font-display text-4xl font-bold">
+        <BackButton variant="light" />
+        <h1 className="mt-4 flex items-center gap-3 font-display text-4xl font-bold">
           <FlaskConical className="h-8 w-8 text-primary" /> Labs
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">Share PDFs, assignments, and notes with your hub.</p>

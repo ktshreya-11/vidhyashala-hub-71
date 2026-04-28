@@ -19,6 +19,7 @@ import { Route as ToolsLabsRouteImport } from './routes/tools.labs'
 import { Route as PathsLiveCollaborationRouteImport } from './routes/paths.live-collaboration'
 import { Route as PathsIndustryLinkRouteImport } from './routes/paths.industry-link'
 import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
+import { Route as PathsCareerSimRouteImport } from './routes/paths.career-sim'
 import { Route as PathsBlockchainBadgingRouteImport } from './routes/paths.blockchain-badging'
 
 const FeedbackRoute = FeedbackRouteImport.update({
@@ -71,6 +72,11 @@ const PathsDsaLabRoute = PathsDsaLabRouteImport.update({
   path: '/paths/dsa-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PathsCareerSimRoute = PathsCareerSimRouteImport.update({
+  id: '/paths/career-sim',
+  path: '/paths/career-sim',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PathsBlockchainBadgingRoute = PathsBlockchainBadgingRouteImport.update({
   id: '/paths/blockchain-badging',
   path: '/paths/blockchain-badging',
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/feedback'
     | '/paths/blockchain-badging'
+    | '/paths/career-sim'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/feedback'
     | '/paths/blockchain-badging'
+    | '/paths/career-sim'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/feedback'
     | '/paths/blockchain-badging'
+    | '/paths/career-sim'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   FeedbackRoute: typeof FeedbackRoute
   PathsBlockchainBadgingRoute: typeof PathsBlockchainBadgingRoute
+  PathsCareerSimRoute: typeof PathsCareerSimRoute
   PathsDsaLabRoute: typeof PathsDsaLabRoute
   PathsIndustryLinkRoute: typeof PathsIndustryLinkRoute
   PathsLiveCollaborationRoute: typeof PathsLiveCollaborationRoute
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathsDsaLabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paths/career-sim': {
+      id: '/paths/career-sim'
+      path: '/paths/career-sim'
+      fullPath: '/paths/career-sim'
+      preLoaderRoute: typeof PathsCareerSimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/paths/blockchain-badging': {
       id: '/paths/blockchain-badging'
       path: '/paths/blockchain-badging'
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   FeedbackRoute: FeedbackRoute,
   PathsBlockchainBadgingRoute: PathsBlockchainBadgingRoute,
+  PathsCareerSimRoute: PathsCareerSimRoute,
   PathsDsaLabRoute: PathsDsaLabRoute,
   PathsIndustryLinkRoute: PathsIndustryLinkRoute,
   PathsLiveCollaborationRoute: PathsLiveCollaborationRoute,
@@ -271,3 +292,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

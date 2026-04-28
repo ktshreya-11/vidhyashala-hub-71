@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
+import { BackButton } from "@/components/BackButton";
 import { TrendingUp, Users, Trophy, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -28,6 +29,7 @@ function Dashboard() {
       <TopNav />
       <main className="flex-1">
         <div className="mx-auto max-w-7xl px-6 py-12">
+          <BackButton variant="light" />
           <div>
             <p className="text-sm text-muted-foreground">Welcome back 👋</p>
             <h1 className="mt-1 font-display text-4xl font-bold">Your Dashboard</h1>
