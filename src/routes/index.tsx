@@ -3,6 +3,7 @@ import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
+import { Paths } from "@/components/Paths";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,6 +23,7 @@ function Index() {
       <TopNav />
       <main className="flex-1">
         <Hero />
+        <Paths />
         <Features />
       </main>
       <Footer />
