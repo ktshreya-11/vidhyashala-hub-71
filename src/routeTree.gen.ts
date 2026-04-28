@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PathsLiveCollaborationRouteImport } from './routes/paths.live-collaboration'
+import { Route as PathsIndustryLinkRouteImport } from './routes/paths.industry-link'
+import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
+import { Route as PathsBlockchainBadgingRouteImport } from './routes/paths.blockchain-badging'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -28,35 +32,93 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PathsLiveCollaborationRoute = PathsLiveCollaborationRouteImport.update({
+  id: '/paths/live-collaboration',
+  path: '/paths/live-collaboration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathsIndustryLinkRoute = PathsIndustryLinkRouteImport.update({
+  id: '/paths/industry-link',
+  path: '/paths/industry-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathsDsaLabRoute = PathsDsaLabRouteImport.update({
+  id: '/paths/dsa-lab',
+  path: '/paths/dsa-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathsBlockchainBadgingRoute = PathsBlockchainBadgingRouteImport.update({
+  id: '/paths/blockchain-badging',
+  path: '/paths/blockchain-badging',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/dsa-lab': typeof PathsDsaLabRoute
+  '/paths/industry-link': typeof PathsIndustryLinkRoute
+  '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/dsa-lab': typeof PathsDsaLabRoute
+  '/paths/industry-link': typeof PathsIndustryLinkRoute
+  '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
+  '/paths/dsa-lab': typeof PathsDsaLabRoute
+  '/paths/industry-link': typeof PathsIndustryLinkRoute
+  '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/paths/blockchain-badging'
+    | '/paths/dsa-lab'
+    | '/paths/industry-link'
+    | '/paths/live-collaboration'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/dashboard'
-  id: '__root__' | '/' | '/about' | '/dashboard'
+  to:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/paths/blockchain-badging'
+    | '/paths/dsa-lab'
+    | '/paths/industry-link'
+    | '/paths/live-collaboration'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/paths/blockchain-badging'
+    | '/paths/dsa-lab'
+    | '/paths/industry-link'
+    | '/paths/live-collaboration'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
+  PathsBlockchainBadgingRoute: typeof PathsBlockchainBadgingRoute
+  PathsDsaLabRoute: typeof PathsDsaLabRoute
+  PathsIndustryLinkRoute: typeof PathsIndustryLinkRoute
+  PathsLiveCollaborationRoute: typeof PathsLiveCollaborationRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +144,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paths/live-collaboration': {
+      id: '/paths/live-collaboration'
+      path: '/paths/live-collaboration'
+      fullPath: '/paths/live-collaboration'
+      preLoaderRoute: typeof PathsLiveCollaborationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paths/industry-link': {
+      id: '/paths/industry-link'
+      path: '/paths/industry-link'
+      fullPath: '/paths/industry-link'
+      preLoaderRoute: typeof PathsIndustryLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paths/dsa-lab': {
+      id: '/paths/dsa-lab'
+      path: '/paths/dsa-lab'
+      fullPath: '/paths/dsa-lab'
+      preLoaderRoute: typeof PathsDsaLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paths/blockchain-badging': {
+      id: '/paths/blockchain-badging'
+      path: '/paths/blockchain-badging'
+      fullPath: '/paths/blockchain-badging'
+      preLoaderRoute: typeof PathsBlockchainBadgingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
+  PathsBlockchainBadgingRoute: PathsBlockchainBadgingRoute,
+  PathsDsaLabRoute: PathsDsaLabRoute,
+  PathsIndustryLinkRoute: PathsIndustryLinkRoute,
+  PathsLiveCollaborationRoute: PathsLiveCollaborationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

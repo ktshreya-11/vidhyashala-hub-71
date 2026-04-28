@@ -30,7 +30,7 @@ const TESTS = [
 
 function DsaLab() {
   const [lang, setLang] = useState<typeof LANGS[number]>(LANGS[0]);
-  const [code, setCode] = useState(LANGS[0].starter);
+  const [code, setCode] = useState<string>(LANGS[0].starter);
   const [output, setOutput] = useState<string>("// Run your code to see output");
   const [results, setResults] = useState<boolean[]>([]);
   const [running, setRunning] = useState(false);
