@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
 import { ArrowLeft, MapPin, Calendar, Award } from "lucide-react";
-import { USERS, SEED_POSTS } from "@/data/feedback";
+import { USERS, SEED_POSTS, type FeedbackUser } from "@/data/feedback";
 
 export const Route = createFileRoute("/u/$username")({
   loader: ({ params }) => {
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/u/$username")({
 });
 
 function Profile() {
-  const { user } = Route.useLoaderData();
+  const { user } = Route.useLoaderData() as { user: FeedbackUser };
   const userPosts = SEED_POSTS.filter((p) => p.user === user.username);
 
   return (

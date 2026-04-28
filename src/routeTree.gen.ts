@@ -9,14 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UUsernameRouteImport } from './routes/u.$username'
+import { Route as ToolsNotebookRouteImport } from './routes/tools.notebook'
+import { Route as ToolsLabsRouteImport } from './routes/tools.labs'
 import { Route as PathsLiveCollaborationRouteImport } from './routes/paths.live-collaboration'
 import { Route as PathsIndustryLinkRouteImport } from './routes/paths.industry-link'
 import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
 import { Route as PathsBlockchainBadgingRouteImport } from './routes/paths.blockchain-badging'
 
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -30,6 +39,21 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UUsernameRoute = UUsernameRouteImport.update({
+  id: '/u/$username',
+  path: '/u/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsNotebookRoute = ToolsNotebookRouteImport.update({
+  id: '/tools/notebook',
+  path: '/tools/notebook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsLabsRoute = ToolsLabsRouteImport.update({
+  id: '/tools/labs',
+  path: '/tools/labs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PathsLiveCollaborationRoute = PathsLiveCollaborationRouteImport.update({
@@ -57,29 +81,41 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/labs': typeof ToolsLabsRoute
+  '/tools/notebook': typeof ToolsNotebookRoute
+  '/u/$username': typeof UUsernameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/labs': typeof ToolsLabsRoute
+  '/tools/notebook': typeof ToolsNotebookRoute
+  '/u/$username': typeof UUsernameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/feedback': typeof FeedbackRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/labs': typeof ToolsLabsRoute
+  '/tools/notebook': typeof ToolsNotebookRoute
+  '/u/$username': typeof UUsernameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,42 +123,65 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/dashboard'
+    | '/feedback'
     | '/paths/blockchain-badging'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/labs'
+    | '/tools/notebook'
+    | '/u/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/dashboard'
+    | '/feedback'
     | '/paths/blockchain-badging'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/labs'
+    | '/tools/notebook'
+    | '/u/$username'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/dashboard'
+    | '/feedback'
     | '/paths/blockchain-badging'
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/labs'
+    | '/tools/notebook'
+    | '/u/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
+  FeedbackRoute: typeof FeedbackRoute
   PathsBlockchainBadgingRoute: typeof PathsBlockchainBadgingRoute
   PathsDsaLabRoute: typeof PathsDsaLabRoute
   PathsIndustryLinkRoute: typeof PathsIndustryLinkRoute
   PathsLiveCollaborationRoute: typeof PathsLiveCollaborationRoute
+  ToolsLabsRoute: typeof ToolsLabsRoute
+  ToolsNotebookRoute: typeof ToolsNotebookRoute
+  UUsernameRoute: typeof UUsernameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -142,6 +201,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/u/$username': {
+      id: '/u/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof UUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/notebook': {
+      id: '/tools/notebook'
+      path: '/tools/notebook'
+      fullPath: '/tools/notebook'
+      preLoaderRoute: typeof ToolsNotebookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/labs': {
+      id: '/tools/labs'
+      path: '/tools/labs'
+      fullPath: '/tools/labs'
+      preLoaderRoute: typeof ToolsLabsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/paths/live-collaboration': {
@@ -179,10 +259,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
+  FeedbackRoute: FeedbackRoute,
   PathsBlockchainBadgingRoute: PathsBlockchainBadgingRoute,
   PathsDsaLabRoute: PathsDsaLabRoute,
   PathsIndustryLinkRoute: PathsIndustryLinkRoute,
   PathsLiveCollaborationRoute: PathsLiveCollaborationRoute,
+  ToolsLabsRoute: ToolsLabsRoute,
+  ToolsNotebookRoute: ToolsNotebookRoute,
+  UUsernameRoute: UUsernameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
