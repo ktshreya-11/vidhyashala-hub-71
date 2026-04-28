@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
+import { BackButton } from "@/components/BackButton";
 import { Target, Heart, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
@@ -29,7 +30,8 @@ function About() {
         <section className="relative overflow-hidden bg-gradient-hero py-24">
           <div className="absolute inset-0 bg-gradient-glow" />
           <div className="relative mx-auto max-w-4xl px-6 text-center">
-            <h1 className="font-display text-5xl font-bold text-white md:text-6xl">About Vidyashala</h1>
+            <div className="flex justify-center"><BackButton /></div>
+            <h1 className="mt-6 font-display text-5xl font-bold text-white md:text-6xl">About Vidyashala</h1>
             <p className="mt-6 text-lg text-white/70">
               We're building the hub where ambitious students meet, learn, and launch their careers — together.
             </p>
