@@ -1,4 +1,4 @@
-import { Link, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
 type Variant = "dark" | "light";
@@ -36,8 +36,4 @@ export function BackButton({
       {label}
     </button>
   );
-
-  // unused but keeps Link in dep tree for tree-shaking-safe usage
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  Link;
 }
