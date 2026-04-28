@@ -1,26 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { TopNav } from "@/components/TopNav";
+import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/Hero";
+import { Features } from "@/components/Features";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Vidyashala Hub — Learn Together, Build Your Future" },
+      { name: "description", content: "Join study hubs, chat with peers, and simulate careers. Vidyashala is the collaborative learning platform for ambitious students." },
+      { property: "og:title", content: "Vidyashala Hub" },
+      { property: "og:description", content: "Collaborative learning hubs and career simulations for students." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen flex-col bg-background">
+      <TopNav />
+      <main className="flex-1">
+        <Hero />
+        <Features />
+      </main>
+      <Footer />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
