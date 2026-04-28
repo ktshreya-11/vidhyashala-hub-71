@@ -9,6 +9,9 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About Us" },
   { to: "/dashboard", label: "Dashboard" },
+  { to: "/tools/notebook", label: "Notebook" },
+  { to: "/tools/labs", label: "Labs" },
+  { to: "/feedback", label: "Feedback" },
 ] as const;
 
 export function TopNav() {
@@ -99,7 +102,7 @@ export function TopNav() {
                   key={l.to}
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="font-display text-5xl font-bold text-white/80 transition-all hover:text-white hover:tracking-wider md:text-7xl"
+                  className="font-display text-3xl font-bold text-white/80 transition-all hover:text-white hover:tracking-wider md:text-5xl"
                   style={{ animation: `fade-up 0.5s ${i * 0.1}s both` }}
                 >
                   {l.label}

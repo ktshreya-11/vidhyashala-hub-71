@@ -59,9 +59,9 @@ export function Footer() {
           <div>
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground">Resources</h4>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li><a href="#" className="transition-colors hover:text-primary">Career Sim</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Study Hubs</a></li>
-              <li><a href="#" className="transition-colors hover:text-primary">Badges</a></li>
+              <li><Link to="/tools/notebook" className="transition-colors hover:text-primary">Notebook</Link></li>
+              <li><Link to="/tools/labs" className="transition-colors hover:text-primary">Labs</Link></li>
+              <li><Link to="/feedback" className="transition-colors hover:text-primary">Feedback</Link></li>
             </ul>
           </div>
         </div>
