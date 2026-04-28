@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
-import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
 
 export function PathLayout({
   eyebrow,
@@ -22,9 +21,7 @@ export function PathLayout({
         <section className="relative overflow-hidden border-b border-border bg-gradient-hero">
           <div className="absolute inset-0 bg-gradient-glow opacity-60" />
           <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-20">
-            <Link to="/" className="inline-flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white">
-              <ArrowLeft className="h-4 w-4" /> Back to home
-            </Link>
+            <BackButton />
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur">
               {eyebrow}
             </div>
