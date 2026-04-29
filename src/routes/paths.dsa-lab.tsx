@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { PathLayout } from "@/components/PathLayout";
 import { Button } from "@/components/ui/button";
-import { Play, CheckCircle2, Circle, Terminal, ListChecks, Flame, ChevronRight } from "lucide-react";
+import { Play, CheckCircle2, Circle, Terminal, ListChecks, Flame, ChevronRight, Send } from "lucide-react";
+import { pushNotification } from "@/hooks/use-notifications";
 
 export const Route = createFileRoute("/paths/dsa-lab")({
   head: () => ({
@@ -165,8 +166,8 @@ function DsaLab() {
 
   const run = async () => {
     setRunning(true);
-    setOutput("// Running...");
-    await new Promise((r) => setTimeout(r, 600));
+    setOutput("// Running test cases...");
+    await new Promise((r) => setTimeout(r, 500));
 
     if (lang.id === "javascript") {
       const logs: string[] = [];
@@ -176,18 +177,33 @@ function DsaLab() {
         setOutput(logs.join("\n") || "// (no output)");
         const r = active.tests.map(() => Math.random() > 0.1);
         setResults(r);
-        if (r.every(Boolean)) persist({ ...completed, [active.id]: true });
       } catch (e) {
         setOutput(`Error: ${(e as Error).message}`);
         setResults([]);
       }
     } else {
       setOutput(`// Simulated ${lang.label} runtime\nExecution finished in 12ms`);
-      const r = active.tests.map(() => true);
-      setResults(r);
-      persist({ ...completed, [active.id]: true });
+      setResults(active.tests.map(() => true));
     }
     setRunning(false);
+  };
+
+  const submit = async () => {
+    if (results.length === 0) {
+      setOutput("// Please Run your code first to validate test cases.");
+      return;
+    }
+    if (!results.every(Boolean)) {
+      setOutput("// Some tests are failing — fix them before submitting.");
+      return;
+    }
+    persist({ ...completed, [active.id]: true });
+    setOutput(`// ✓ Submission accepted. "${active.title}" marked as complete.`);
+    pushNotification({
+      kind: "badge",
+      title: "Problem solved",
+      body: `You completed "${active.title}" (${active.difficulty}). Keep the streak alive!`,
+    });
   };
 
   return (
@@ -317,9 +333,20 @@ function DsaLab() {
                   </button>
                 ))}
               </div>
-              <Button onClick={run} disabled={running} size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90">
-                <Play className="mr-1.5 h-3.5 w-3.5" /> {running ? "Running..." : "Run & Submit"}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button onClick={run} disabled={running} size="sm" variant="outline">
+                  <Play className="mr-1.5 h-3.5 w-3.5" /> {running ? "Running..." : "Run"}
+                </Button>
+                <Button
+                  onClick={submit}
+                  disabled={running}
+                  size="sm"
+                  className="bg-gradient-primary text-primary-foreground hover:opacity-90"
+                >
+                  <Send className="mr-1.5 h-3.5 w-3.5" />
+                  {completed[active.id] ? "Submitted ✓" : "Submit"}
+                </Button>
+              </div>
             </div>
 
             <Editor
