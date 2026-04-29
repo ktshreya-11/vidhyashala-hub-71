@@ -4,7 +4,7 @@ import { PathLayout } from "@/components/PathLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Briefcase, GraduationCap, Plus, Star, CheckCircle2, Clock, Send, Lock } from "lucide-react";
+import { Briefcase, GraduationCap, Plus, Star, CheckCircle2, Clock, Send } from "lucide-react";
 import { useProfile } from "@/hooks/use-profile";
 import { pushNotification } from "@/hooks/use-notifications";
 
