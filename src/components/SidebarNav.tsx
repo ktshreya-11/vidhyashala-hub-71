@@ -38,6 +38,7 @@ const sections: { title: string; items: { to: string; label: string; icon: typeo
   {
     title: "Tools & Community",
     items: [
+      { to: "/tools/ide", label: "Explore Labs IDE", icon: FlaskConical },
       { to: "/tools/notebook", label: "Notebook", icon: Notebook },
       { to: "/tools/labs", label: "Labs (Files)", icon: FlaskConical },
       { to: "/feedback", label: "Community Wall", icon: MessageSquare },

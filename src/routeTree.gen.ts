@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UUsernameRouteImport } from './routes/u.$username'
 import { Route as ToolsNotebookRouteImport } from './routes/tools.notebook'
 import { Route as ToolsLabsRouteImport } from './routes/tools.labs'
+import { Route as ToolsIdeRouteImport } from './routes/tools.ide'
 import { Route as PathsLiveCollaborationRouteImport } from './routes/paths.live-collaboration'
 import { Route as PathsIndustryLinkRouteImport } from './routes/paths.industry-link'
 import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
@@ -57,6 +58,11 @@ const ToolsLabsRoute = ToolsLabsRouteImport.update({
   path: '/tools/labs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsIdeRoute = ToolsIdeRouteImport.update({
+  id: '/tools/ide',
+  path: '/tools/ide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PathsLiveCollaborationRoute = PathsLiveCollaborationRouteImport.update({
   id: '/paths/live-collaboration',
   path: '/paths/live-collaboration',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/ide': typeof ToolsIdeRoute
   '/tools/labs': typeof ToolsLabsRoute
   '/tools/notebook': typeof ToolsNotebookRoute
   '/u/$username': typeof UUsernameRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/ide': typeof ToolsIdeRoute
   '/tools/labs': typeof ToolsLabsRoute
   '/tools/notebook': typeof ToolsNotebookRoute
   '/u/$username': typeof UUsernameRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/paths/dsa-lab': typeof PathsDsaLabRoute
   '/paths/industry-link': typeof PathsIndustryLinkRoute
   '/paths/live-collaboration': typeof PathsLiveCollaborationRoute
+  '/tools/ide': typeof ToolsIdeRoute
   '/tools/labs': typeof ToolsLabsRoute
   '/tools/notebook': typeof ToolsNotebookRoute
   '/u/$username': typeof UUsernameRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/ide'
     | '/tools/labs'
     | '/tools/notebook'
     | '/u/$username'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/ide'
     | '/tools/labs'
     | '/tools/notebook'
     | '/u/$username'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/paths/dsa-lab'
     | '/paths/industry-link'
     | '/paths/live-collaboration'
+    | '/tools/ide'
     | '/tools/labs'
     | '/tools/notebook'
     | '/u/$username'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   PathsDsaLabRoute: typeof PathsDsaLabRoute
   PathsIndustryLinkRoute: typeof PathsIndustryLinkRoute
   PathsLiveCollaborationRoute: typeof PathsLiveCollaborationRoute
+  ToolsIdeRoute: typeof ToolsIdeRoute
   ToolsLabsRoute: typeof ToolsLabsRoute
   ToolsNotebookRoute: typeof ToolsNotebookRoute
   UUsernameRoute: typeof UUsernameRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsLabsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/ide': {
+      id: '/tools/ide'
+      path: '/tools/ide'
+      fullPath: '/tools/ide'
+      preLoaderRoute: typeof ToolsIdeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/paths/live-collaboration': {
       id: '/paths/live-collaboration'
       path: '/paths/live-collaboration'
@@ -285,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathsDsaLabRoute: PathsDsaLabRoute,
   PathsIndustryLinkRoute: PathsIndustryLinkRoute,
   PathsLiveCollaborationRoute: PathsLiveCollaborationRoute,
+  ToolsIdeRoute: ToolsIdeRoute,
   ToolsLabsRoute: ToolsLabsRoute,
   ToolsNotebookRoute: ToolsNotebookRoute,
   UUsernameRoute: UUsernameRoute,
