@@ -1,0 +1,55 @@
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+export type Notif = {
+  id: string;
+  title: string;
+  body: string;
+  at: number;
+  read: boolean;
+  kind: "hub" | "task" | "badge" | "system";
+};
+
+const KEY = "vidyashala_notifs";
+const EVENT = "vidyashala:notifs";
+
+function read(): Notif[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function write(items: Notif[]) {
+  localStorage.setItem(KEY, JSON.stringify(items));
+  window.dispatchEvent(new CustomEvent(EVENT));
+}
+
+const subscribe = (cb: () => void) => {
+  window.addEventListener(EVENT, cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    window.removeEventListener(EVENT, cb);
+    window.removeEventListener("storage", cb);
+  };
+};
+
+export function pushNotification(n: Omit<Notif, "id" | "at" | "read">) {
+  if (typeof window === "undefined") return;
+  const next: Notif = { ...n, id: crypto.randomUUID(), at: Date.now(), read: false };
+  write([next, ...read()].slice(0, 30));
+}
+
+export function useNotifications() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const items = useSyncExternalStore(subscribe, read, () => []);
+
+  const markAllRead = () => write(items.map((n) => ({ ...n, read: true })));
+  const clear = () => write([]);
+  const unread = items.filter((n) => !n.read).length;
+
+  return { items: hydrated ? items : [], unread: hydrated ? unread : 0, markAllRead, clear };
+}

@@ -4,6 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { Paths } from "@/components/Paths";
+import { ExploreLabsCallout } from "@/components/ExploreLabsCallout";
+import { BuildWithGlobal } from "@/components/BuildWithGlobal";
 import { Community } from "@/components/Community";
 
 export const Route = createFileRoute("/")({
@@ -26,6 +28,8 @@ function Index() {
         <Hero />
         <Features />
         <Paths />
+        <ExploreLabsCallout />
+        <BuildWithGlobal />
         <Community />
       </main>
       <Footer />

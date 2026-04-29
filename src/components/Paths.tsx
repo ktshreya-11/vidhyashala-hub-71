@@ -1,46 +1,38 @@
 import { Link } from "@tanstack/react-router";
-import { Code2, ShieldCheck, Briefcase, Radio, Compass, ArrowUpRight } from "lucide-react";
+import { Code2, ShieldCheck, Briefcase, Radio, ArrowUpRight } from "lucide-react";
 
 const paths = [
   {
     to: "/paths/dsa-lab",
     icon: Code2,
     title: "DSA Lab",
-    tag: "Coding",
-    desc: "Solve Easy/Medium/Hard problems in a built-in IDE. Submit and watch them mark complete.",
+    tag: "Simulated Environment",
+    desc: "Easy/Medium/Hard sidebar filters. Built-in IDE with separate Run and Submit. Mark problems complete.",
     accent: "from-primary to-primary-glow",
-  },
-  {
-    to: "/paths/career-sim",
-    icon: Compass,
-    title: "Career Sim",
-    tag: "Discover",
-    desc: "Explore real career paths and collect verifiable, on-chain badges as you grow.",
-    accent: "from-primary-glow to-primary",
-  },
-  {
-    to: "/paths/blockchain-badging",
-    icon: ShieldCheck,
-    title: "Blockchain Badging",
-    tag: "Verification",
-    desc: "Mint, save, and verify your achievement URLs with tamper-proof on-chain hashes.",
-    accent: "from-primary to-primary-glow",
-  },
-  {
-    to: "/paths/industry-link",
-    icon: Briefcase,
-    title: "Industry Link",
-    tag: "Mentorship",
-    desc: "Pros post real tasks. Students submit, track, and get reviewed in a clean dashboard.",
-    accent: "from-primary-glow to-primary",
   },
   {
     to: "/paths/live-collaboration",
     icon: Radio,
     title: "Live Collaboration",
-    tag: "Teamwork",
-    desc: "Step into a Virtual War-Room — distributed teams plan, build, and ship together.",
+    tag: "Distributed Teams",
+    desc: "A war-room UI for global, distributed teams — kanban, presence, and chat in one canvas.",
+    accent: "from-primary-glow to-primary",
+  },
+  {
+    to: "/paths/industry-link",
+    icon: Briefcase,
+    title: "Industry Link",
+    tag: "Role-Based Portal",
+    desc: "Pros post real tasks. Students browse, submit, and get reviewed in a clean dashboard.",
     accent: "from-primary to-primary-glow",
+  },
+  {
+    to: "/paths/blockchain-badging",
+    icon: ShieldCheck,
+    title: "Blockchain Badging",
+    tag: "Verification & Storage",
+    desc: "Mint, save, and verify your achievement URLs with tamper-proof on-chain hashes.",
+    accent: "from-primary-glow to-primary",
   },
 ] as const;
 
@@ -55,8 +47,8 @@ export function Paths() {
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               Core Labs · The Hub
             </div>
-            <h2 className="mt-4 font-display text-4xl font-bold md:text-5xl">
-              Five ways to <span className="text-gradient">level up</span>
+            <h2 className="mt-4 font-display text-4xl font-bold text-foreground md:text-5xl">
+              Four ways to <span className="text-gradient">level up</span>
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
@@ -64,7 +56,7 @@ export function Paths() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {paths.map(({ to, icon: Icon, title, tag, desc, accent }) => (
             <Link
               key={to}
@@ -85,14 +77,14 @@ export function Paths() {
                 <div className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} shadow-glow`}>
                   <Icon className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/50 transition-all group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/50 text-foreground transition-all group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground">
                   <ArrowUpRight className="h-5 w-5 transition-transform group-hover:rotate-45" />
                 </div>
               </div>
 
               <div className="relative mt-7">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">{tag}</span>
-                <h3 className="mt-2 font-display text-2xl font-bold">{title}</h3>
+                <h3 className="mt-2 font-display text-2xl font-bold text-foreground">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{desc}</p>
               </div>
             </Link>

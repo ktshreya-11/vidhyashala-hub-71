@@ -36,7 +36,7 @@
 :root {
   --radius: 0.75rem;
 
-  /* Light theme — clean white with deep blue accents */
+  /* Light theme — clean white with deep blue accents (high contrast) */
   --background: oklch(0.99 0.003 240);
   --foreground: oklch(0.15 0.02 240);
 
@@ -46,33 +46,33 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 240);
 
-  --primary: oklch(0.45 0.21 258);
+  --primary: oklch(0.42 0.22 258);
   --primary-foreground: oklch(0.99 0 0);
-  --primary-glow: oklch(0.62 0.22 258);
+  --primary-glow: oklch(0.55 0.22 258);
 
   --secondary: oklch(0.96 0.01 240);
-  --secondary-foreground: oklch(0.2 0.03 240);
+  --secondary-foreground: oklch(0.18 0.03 240);
 
-  --muted: oklch(0.96 0.01 240);
-  --muted-foreground: oklch(0.5 0.02 240);
+  --muted: oklch(0.95 0.01 240);
+  --muted-foreground: oklch(0.32 0.02 240);
 
   --accent: oklch(0.93 0.04 258);
-  --accent-foreground: oklch(0.2 0.1 258);
+  --accent-foreground: oklch(0.18 0.1 258);
 
   --destructive: oklch(0.6 0.24 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.9 0.01 240);
+  --border: oklch(0.88 0.01 240);
   --input: oklch(0.92 0.01 240);
-  --ring: oklch(0.45 0.21 258);
+  --ring: oklch(0.42 0.22 258);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.18 0.04 258) 0%, oklch(0.28 0.12 258) 50%, oklch(0.45 0.21 258) 100%);
+  --gradient-hero: linear-gradient(135deg, oklch(0.18 0.04 258) 0%, oklch(0.28 0.12 258) 50%, oklch(0.42 0.22 258) 100%);
   --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
-  --gradient-glow: radial-gradient(circle at 50% 0%, oklch(0.62 0.22 258 / 0.35), transparent 70%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, oklch(0.55 0.22 258 / 0.35), transparent 70%);
 
-  --shadow-elegant: 0 20px 60px -20px oklch(0.45 0.21 258 / 0.35);
-  --shadow-glow: 0 0 50px oklch(0.62 0.22 258 / 0.5);
-  --shadow-card: 0 4px 20px -8px oklch(0.15 0.02 240 / 0.1);
+  --shadow-elegant: 0 20px 60px -20px oklch(0.42 0.22 258 / 0.35);
+  --shadow-glow: 0 0 50px oklch(0.55 0.22 258 / 0.5);
+  --shadow-card: 0 4px 20px -8px oklch(0.15 0.02 240 / 0.12);
 
   --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
