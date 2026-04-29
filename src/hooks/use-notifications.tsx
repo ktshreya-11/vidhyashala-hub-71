@@ -56,7 +56,7 @@ export function pushNotification(n: Omit<Notif, "id" | "at" | "read">) {
 export function useNotifications() {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
-  const items = useSyncExternalStore(subscribe, read, () => []);
+  const items = useSyncExternalStore(subscribe, read, getServerSnapshot);
 
   const markAllRead = () => write(items.map((n) => ({ ...n, read: true })));
   const clear = () => write([]);
