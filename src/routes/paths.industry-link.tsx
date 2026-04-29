@@ -4,7 +4,9 @@ import { PathLayout } from "@/components/PathLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Briefcase, GraduationCap, Plus, Star, CheckCircle2, Clock, Send } from "lucide-react";
+import { Briefcase, GraduationCap, Plus, Star, CheckCircle2, Clock, Send, Lock } from "lucide-react";
+import { useProfile } from "@/hooks/use-profile";
+import { pushNotification } from "@/hooks/use-notifications";
 
 export const Route = createFileRoute("/paths/industry-link")({
   head: () => ({
@@ -36,7 +38,8 @@ const SEED: Task[] = [
 ];
 
 function IndustryLink() {
-  const [role, setRole] = useState<"student" | "professional">("student");
+  const { profile, setRole } = useProfile();
+  const role = profile.role;
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -56,20 +59,26 @@ function IndustryLink() {
 
   const addTask = (e: React.FormEvent) => {
     e.preventDefault();
+    if (role !== "professional") return;
     if (!pTitle.trim() || !pCompany.trim()) return;
     persist([{ id: crypto.randomUUID(), title: pTitle, company: pCompany, desc: pDesc, status: "open", createdAt: Date.now() }, ...tasks]);
     setPTitle(""); setPCompany(""); setPDesc("");
+    pushNotification({ kind: "task", title: "Task posted", body: `"${pTitle}" is now open for student submissions.` });
   };
 
   const submit = (id: string) => {
+    if (role !== "student") return;
     if (!submission.trim()) return;
     persist(tasks.map((t) => (t.id === id ? { ...t, submission, status: "submitted" } : t)));
     setSubmission(""); setActiveId(null);
+    pushNotification({ kind: "task", title: "Submission received", body: "Your work is now awaiting professional review." });
   };
 
   const review = (id: string) => {
+    if (role !== "professional") return;
     persist(tasks.map((t) => (t.id === id ? { ...t, review: { rating: reviewRating, note: reviewNote }, status: "reviewed" } : t)));
     setReviewNote(""); setReviewRating(5); setActiveId(null);
+    pushNotification({ kind: "task", title: "Review submitted", body: `You rated the submission ${reviewRating}/5.` });
   };
 
   const active = tasks.find((t) => t.id === activeId);
