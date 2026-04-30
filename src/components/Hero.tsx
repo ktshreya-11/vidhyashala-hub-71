@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Users, Briefcase, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { pushNotification } from "@/hooks/use-notifications";
+import { Mascot } from "@/components/Mascot";
 
 export function Hero() {
   const onJoinHub = () => {
