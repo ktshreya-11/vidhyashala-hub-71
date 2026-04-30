@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AboutRouteImport } from './routes/about'
@@ -23,6 +25,16 @@ import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
 import { Route as PathsCareerSimRouteImport } from './routes/paths.career-sim'
 import { Route as PathsBlockchainBadgingRouteImport } from './routes/paths.blockchain-badging'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
@@ -94,6 +106,8 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -109,6 +123,8 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -125,6 +141,8 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/feedback': typeof FeedbackRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -142,6 +160,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/dashboard'
     | '/feedback'
+    | '/login'
+    | '/signup'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -157,6 +177,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/dashboard'
     | '/feedback'
+    | '/login'
+    | '/signup'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -172,6 +194,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/dashboard'
     | '/feedback'
+    | '/login'
+    | '/signup'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -188,6 +212,8 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
   FeedbackRoute: typeof FeedbackRoute
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
   PathsBlockchainBadgingRoute: typeof PathsBlockchainBadgingRoute
   PathsCareerSimRoute: typeof PathsCareerSimRoute
   PathsDsaLabRoute: typeof PathsDsaLabRoute
@@ -201,6 +227,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
@@ -300,6 +340,8 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
   FeedbackRoute: FeedbackRoute,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
   PathsBlockchainBadgingRoute: PathsBlockchainBadgingRoute,
   PathsCareerSimRoute: PathsCareerSimRoute,
   PathsDsaLabRoute: PathsDsaLabRoute,
