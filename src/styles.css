@@ -165,3 +165,9 @@
 }
 .animate-fade-up { animation: fade-up 0.8s var(--transition-smooth) both; }
 .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+.animate-mascot-float { animation: mascot-float 5s ease-in-out infinite; transform-style: preserve-3d; }
