@@ -44,7 +44,6 @@ export function SmartSearch({ compact = false }: { compact?: boolean }) {
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (results[active]) go(results[active]);
-      else if (q.trim()) navigate({ to: "/search", search: { q } as never });
     } else if (e.key === "Escape") {
       setOpen(false);
     }
