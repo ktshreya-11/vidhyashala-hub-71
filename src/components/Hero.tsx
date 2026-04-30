@@ -26,6 +26,8 @@ export function Hero() {
         }}
       />
 
+      <div className="pointer-events-none absolute left-4 top-24 hidden lg:block"><Mascot variant="owl" size={140} /></div>
+      <div className="pointer-events-none absolute right-4 top-32 hidden lg:block"><Mascot variant="robot" size={140} /></div>
       <div className="relative mx-auto flex min-h-[80vh] max-w-7xl flex-col items-center justify-center px-6 py-24 text-center">
         <div className="mb-6 inline-flex animate-fade-up items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur">
           <Sparkles className="h-3.5 w-3.5" />

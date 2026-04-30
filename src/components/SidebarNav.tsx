@@ -11,6 +11,8 @@ import {
   FlaskConical,
   Compass,
   MessageSquare,
+  Trophy,
+  LogIn,
   X,
   GraduationCap,
   Sparkles,
@@ -42,6 +44,8 @@ const sections: { title: string; items: { to: string; label: string; icon: typeo
       { to: "/tools/notebook", label: "Notebook", icon: Notebook },
       { to: "/tools/labs", label: "Labs (Files)", icon: FlaskConical },
       { to: "/feedback", label: "Community Wall", icon: MessageSquare },
+      { to: "/badges", label: "My Badges", icon: Trophy },
+      { to: "/login", label: "Login / Sign Up", icon: LogIn },
     ],
   },
 ];
