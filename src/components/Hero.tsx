@@ -63,7 +63,7 @@ export function Hero() {
             onClick={onJoinHub}
             className="group h-14 rounded-full bg-white px-8 font-display text-base font-semibold text-background shadow-elegant transition-all hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-glow"
           >
-            <Link to="/paths/live-collaboration">
+            <Link to="/join-hub">
               <Users className="mr-2 h-5 w-5" />
               Join Hub
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -75,9 +75,9 @@ export function Hero() {
             variant="outline"
             className="group h-14 rounded-full border-2 border-white/30 bg-white/5 px-8 font-display text-base font-semibold text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/10 hover:text-white"
           >
-            <Link to="/paths/career-sim">
+            <Link to="/explore">
               <Briefcase className="mr-2 h-5 w-5" />
-              Try Career Sim
+              Explore
             </Link>
           </Button>
         </div>

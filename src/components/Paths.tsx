@@ -19,11 +19,11 @@ const paths = [
     accent: "from-primary-glow to-primary",
   },
   {
-    to: "/paths/industry-link",
+    to: "/languages",
     icon: Briefcase,
-    title: "Industry Link",
-    tag: "Role-Based Portal",
-    desc: "Pros post real tasks. Students browse, submit, and get reviewed in a clean dashboard.",
+    title: "Languages",
+    tag: "Concepts & Usage",
+    desc: "Deep dives on Python, Java, C++, JavaScript and more — concepts, ecosystem, and where each shines.",
     accent: "from-primary to-primary-glow",
   },
   {
