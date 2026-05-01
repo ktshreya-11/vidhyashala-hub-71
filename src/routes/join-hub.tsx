@@ -133,12 +133,12 @@ function JoinHubPage() {
     setActiveId(hub.id);
     setShowCreate(false);
     setNewName(""); setNewTopic(""); setNewDesc("");
-    pushNotification({ kind: "hub", title: `Hub created: ${hub.name}` });
+    pushNotification({ kind: "hub", title: `Hub created: ${hub.name}`, body: hub.topic });
   };
 
   const joinHub = (id: string) => {
     persist(hubs.map((h) => h.id === id ? { ...h, joined: true, members: [{ id: "me", name: "You", username: "you", avatar: "🧑‍💻" }, ...h.members] } : h));
-    pushNotification({ kind: "hub", title: "Joined hub" });
+    pushNotification({ kind: "hub", title: "Joined hub", body: "Welcome aboard" });
   };
 
   const deleteHub = (id: string) => {
