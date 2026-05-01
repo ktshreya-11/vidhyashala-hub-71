@@ -6,7 +6,7 @@ import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Notebook as NotebookIcon, Plus, Trash2, Pin, ImagePlus, X } from "lucide-react";
+import { Notebook as NotebookIcon, Plus, Trash2, Pin, ImagePlus, X, Download, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/tools/notebook")({
   head: () => ({
@@ -76,6 +76,28 @@ function Notebook() {
   };
 
   const remove = (id: string) => persist(notes.filter((n) => n.id !== id));
+
+  const download = (n: Note) => {
+    const text = `# ${n.title}\n\n${n.body}\n\n---\nSaved: ${new Date(n.createdAt).toLocaleString()}\nFrom Vidyashala Notebook`;
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `${n.title.replace(/[^a-z0-9]+/gi, "_")}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const share = async (n: Note) => {
+    const text = `📝 ${n.title}\n\n${n.body}\n\n— shared from Vidyashala Notebook`;
+    try {
+      if (typeof navigator !== "undefined" && (navigator as any).share) {
+        await (navigator as any).share({ title: n.title, text });
+        return;
+      }
+    } catch { /* fall through */ }
+    try { await navigator.clipboard.writeText(text); alert("Note copied to clipboard — paste anywhere to share."); }
+    catch { alert("Sharing not supported on this device."); }
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -163,13 +185,17 @@ function Notebook() {
                   <div className="p-5">
                     <div className="flex items-start justify-between gap-2">
                       <Pin className="h-4 w-4 shrink-0 text-primary" />
-                      <button
-                        onClick={() => remove(n.id)}
-                        className="rounded-md p-1 text-muted-foreground opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
-                        aria-label="Delete"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center gap-1 opacity-0 transition-all group-hover:opacity-100">
+                        <button onClick={() => download(n)} className="rounded-md p-1 text-muted-foreground hover:bg-primary/10 hover:text-primary" aria-label="Download" title="Download .txt">
+                          <Download className="h-4 w-4" />
+                        </button>
+                        <button onClick={() => share(n)} className="rounded-md p-1 text-muted-foreground hover:bg-primary/10 hover:text-primary" aria-label="Share" title="Share">
+                          <Share2 className="h-4 w-4" />
+                        </button>
+                        <button onClick={() => remove(n.id)} className="rounded-md p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive" aria-label="Delete">
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                     <h3 className="mt-2 font-display text-lg font-semibold">{n.title}</h3>
                     {n.body && (

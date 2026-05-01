@@ -16,6 +16,8 @@ import {
   X,
   GraduationCap,
   Sparkles,
+  Users,
+  Share2,
 } from "lucide-react";
 
 const sections: { title: string; items: { to: string; label: string; icon: typeof Home; params?: Record<string, string> }[] }[] = [
@@ -30,11 +32,14 @@ const sections: { title: string; items: { to: string; label: string; icon: typeo
   {
     title: "Core Labs",
     items: [
+      { to: "/join-hub", label: "Join Hub", icon: Users },
+      { to: "/explore", label: "Explore", icon: Compass },
       { to: "/paths/dsa-lab", label: "DSA Lab", icon: Code2 },
       { to: "/paths/blockchain-badging", label: "Blockchain Badges", icon: ShieldCheck },
-      { to: "/paths/career-sim", label: "Career Sim", icon: Compass },
-      { to: "/paths/industry-link", label: "Industry Link", icon: Briefcase },
-      { to: "/paths/live-collaboration", label: "War-Room", icon: Radio },
+      { to: "/paths/career-sim", label: "Courses (Career Sim)", icon: Compass },
+      { to: "/languages", label: "Languages", icon: Briefcase },
+      { to: "/paths/live-collaboration", label: "Live Collaboration", icon: Radio },
+      { to: "/sharing-resources", label: "Sharing Resources", icon: Share2 },
     ],
   },
   {

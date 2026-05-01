@@ -10,8 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SharingResourcesRouteImport } from './routes/sharing-resources'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LanguagesRouteImport } from './routes/languages'
+import { Route as JoinHubRouteImport } from './routes/join-hub'
 import { Route as FeedbackRouteImport } from './routes/feedback'
+import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as AboutRouteImport } from './routes/about'
@@ -25,10 +29,16 @@ import { Route as PathsIndustryLinkRouteImport } from './routes/paths.industry-l
 import { Route as PathsDsaLabRouteImport } from './routes/paths.dsa-lab'
 import { Route as PathsCareerSimRouteImport } from './routes/paths.career-sim'
 import { Route as PathsBlockchainBadgingRouteImport } from './routes/paths.blockchain-badging'
+import { Route as LanguagesSlugRouteImport } from './routes/languages.$slug'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SharingResourcesRoute = SharingResourcesRouteImport.update({
+  id: '/sharing-resources',
+  path: '/sharing-resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -36,9 +46,24 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguagesRoute = LanguagesRouteImport.update({
+  id: '/languages',
+  path: '/languages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinHubRoute = JoinHubRouteImport.update({
+  id: '/join-hub',
+  path: '/join-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -106,15 +131,25 @@ const PathsBlockchainBadgingRoute = PathsBlockchainBadgingRouteImport.update({
   path: '/paths/blockchain-badging',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguagesSlugRoute = LanguagesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LanguagesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/badges': typeof BadgesRoute
   '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
   '/feedback': typeof FeedbackRoute
+  '/join-hub': typeof JoinHubRoute
+  '/languages': typeof LanguagesRouteWithChildren
   '/login': typeof LoginRoute
+  '/sharing-resources': typeof SharingResourcesRoute
   '/signup': typeof SignupRoute
+  '/languages/$slug': typeof LanguagesSlugRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -130,9 +165,14 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/badges': typeof BadgesRoute
   '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
   '/feedback': typeof FeedbackRoute
+  '/join-hub': typeof JoinHubRoute
+  '/languages': typeof LanguagesRouteWithChildren
   '/login': typeof LoginRoute
+  '/sharing-resources': typeof SharingResourcesRoute
   '/signup': typeof SignupRoute
+  '/languages/$slug': typeof LanguagesSlugRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -149,9 +189,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/badges': typeof BadgesRoute
   '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
   '/feedback': typeof FeedbackRoute
+  '/join-hub': typeof JoinHubRoute
+  '/languages': typeof LanguagesRouteWithChildren
   '/login': typeof LoginRoute
+  '/sharing-resources': typeof SharingResourcesRoute
   '/signup': typeof SignupRoute
+  '/languages/$slug': typeof LanguagesSlugRoute
   '/paths/blockchain-badging': typeof PathsBlockchainBadgingRoute
   '/paths/career-sim': typeof PathsCareerSimRoute
   '/paths/dsa-lab': typeof PathsDsaLabRoute
@@ -169,9 +214,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/badges'
     | '/dashboard'
+    | '/explore'
     | '/feedback'
+    | '/join-hub'
+    | '/languages'
     | '/login'
+    | '/sharing-resources'
     | '/signup'
+    | '/languages/$slug'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -187,9 +237,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/badges'
     | '/dashboard'
+    | '/explore'
     | '/feedback'
+    | '/join-hub'
+    | '/languages'
     | '/login'
+    | '/sharing-resources'
     | '/signup'
+    | '/languages/$slug'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -205,9 +260,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/badges'
     | '/dashboard'
+    | '/explore'
     | '/feedback'
+    | '/join-hub'
+    | '/languages'
     | '/login'
+    | '/sharing-resources'
     | '/signup'
+    | '/languages/$slug'
     | '/paths/blockchain-badging'
     | '/paths/career-sim'
     | '/paths/dsa-lab'
@@ -224,8 +284,12 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BadgesRoute: typeof BadgesRoute
   DashboardRoute: typeof DashboardRoute
+  ExploreRoute: typeof ExploreRoute
   FeedbackRoute: typeof FeedbackRoute
+  JoinHubRoute: typeof JoinHubRoute
+  LanguagesRoute: typeof LanguagesRouteWithChildren
   LoginRoute: typeof LoginRoute
+  SharingResourcesRoute: typeof SharingResourcesRoute
   SignupRoute: typeof SignupRoute
   PathsBlockchainBadgingRoute: typeof PathsBlockchainBadgingRoute
   PathsCareerSimRoute: typeof PathsCareerSimRoute
@@ -247,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sharing-resources': {
+      id: '/sharing-resources'
+      path: '/sharing-resources'
+      fullPath: '/sharing-resources'
+      preLoaderRoute: typeof SharingResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -254,11 +325,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/languages': {
+      id: '/languages'
+      path: '/languages'
+      fullPath: '/languages'
+      preLoaderRoute: typeof LanguagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-hub': {
+      id: '/join-hub'
+      path: '/join-hub'
+      fullPath: '/join-hub'
+      preLoaderRoute: typeof JoinHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
       fullPath: '/feedback'
       preLoaderRoute: typeof FeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -352,16 +444,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathsBlockchainBadgingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/languages/$slug': {
+      id: '/languages/$slug'
+      path: '/$slug'
+      fullPath: '/languages/$slug'
+      preLoaderRoute: typeof LanguagesSlugRouteImport
+      parentRoute: typeof LanguagesRoute
+    }
   }
 }
+
+interface LanguagesRouteChildren {
+  LanguagesSlugRoute: typeof LanguagesSlugRoute
+}
+
+const LanguagesRouteChildren: LanguagesRouteChildren = {
+  LanguagesSlugRoute: LanguagesSlugRoute,
+}
+
+const LanguagesRouteWithChildren = LanguagesRoute._addFileChildren(
+  LanguagesRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BadgesRoute: BadgesRoute,
   DashboardRoute: DashboardRoute,
+  ExploreRoute: ExploreRoute,
   FeedbackRoute: FeedbackRoute,
+  JoinHubRoute: JoinHubRoute,
+  LanguagesRoute: LanguagesRouteWithChildren,
   LoginRoute: LoginRoute,
+  SharingResourcesRoute: SharingResourcesRoute,
   SignupRoute: SignupRoute,
   PathsBlockchainBadgingRoute: PathsBlockchainBadgingRoute,
   PathsCareerSimRoute: PathsCareerSimRoute,
