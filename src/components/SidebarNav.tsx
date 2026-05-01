@@ -16,6 +16,8 @@ import {
   X,
   GraduationCap,
   Sparkles,
+  Users,
+  Share2,
 } from "lucide-react";
 
 const sections: { title: string; items: { to: string; label: string; icon: typeof Home; params?: Record<string, string> }[] }[] = [
