@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { PathLayout } from "@/components/PathLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ShieldCheck, ShieldAlert, Trash2, Plus, Hash, Search } from "lucide-react";
+import { ShieldCheck, ShieldAlert, Trash2, Plus, Hash, Search, Download, Share2, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/paths/blockchain-badging")({
   head: () => ({
@@ -59,6 +59,45 @@ function Badging() {
   };
 
   const remove = (id: string) => persist(badges.filter((b) => b.id !== id));
+
+  const SAMPLES: Omit<Badge, "id" | "addedAt">[] = [
+    { name: "Web Development", url: "https://vidyashala.dev/badges/web-dev", hash: fakeHash("web-dev") },
+    { name: "DSA with Python", url: "https://vidyashala.dev/badges/dsa-python", hash: fakeHash("dsa-python") },
+    { name: "MERN Stack", url: "https://vidyashala.dev/badges/mern", hash: fakeHash("mern") },
+    { name: "Cybersecurity Basics", url: "https://vidyashala.dev/badges/cybersec", hash: fakeHash("cybersec") },
+  ];
+
+  const loadSamples = () => {
+    const additions = SAMPLES
+      .filter((s) => !badges.some((b) => b.url === s.url))
+      .map((s) => ({ ...s, id: crypto.randomUUID(), addedAt: Date.now() }));
+    if (additions.length) persist([...additions, ...badges]);
+  };
+
+  const download = (b: Badge) => {
+    const payload = {
+      name: b.name,
+      url: b.url,
+      hash: b.hash,
+      issuedAt: new Date(b.addedAt).toISOString(),
+      issuer: "Vidyashala Hub",
+      verification: "on-chain (mock)",
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${b.name.replace(/\s+/g, "-").toLowerCase()}-badge.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  const share = async (b: Badge) => {
+    const text = `🏆 I earned the "${b.name}" badge on Vidyashala — verified on-chain (${b.hash}). ${b.url}`;
+    try {
+      if (navigator.share) await navigator.share({ title: b.name, text, url: b.url });
+      else { await navigator.clipboard.writeText(text); alert("Share text copied to clipboard"); }
+    } catch { /* user cancelled */ }
+  };
 
   const verify = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,30 +174,45 @@ function Badging() {
 
       {/* Badge list */}
       <div className="mt-10">
-        <h2 className="font-display text-xl font-semibold">Your saved badges <span className="text-muted-foreground">({badges.length})</span></h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-display text-xl font-semibold">Your saved badges <span className="text-muted-foreground">({badges.length})</span></h2>
+          <Button onClick={loadSamples} size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground">
+            <Sparkles className="mr-1.5 h-3.5 w-3.5" /> Load sample badges
+          </Button>
+        </div>
         {badges.length === 0 ? (
           <div className="mt-4 rounded-2xl border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
-            No badges yet. Add one above to mint its on-chain proof.
+            No badges yet. Add one above, or click "Load sample badges" to preview.
           </div>
         ) : (
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {badges.map((b) => (
-              <div key={b.id} className="group flex items-start justify-between gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/50">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 shrink-0 text-primary" />
-                    <span className="truncate font-semibold">{b.name}</span>
+              <div key={b.id} className="group rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/50">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 shrink-0 text-primary" />
+                      <span className="truncate font-semibold">{b.name}</span>
+                    </div>
+                    <a href={b.url} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-muted-foreground hover:text-primary">
+                      {b.url}
+                    </a>
+                    <div className="mt-2 flex items-center gap-1.5 font-mono text-[10px] text-primary">
+                      <Hash className="h-3 w-3" /> {b.hash}
+                    </div>
                   </div>
-                  <a href={b.url} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-muted-foreground hover:text-primary">
-                    {b.url}
-                  </a>
-                  <div className="mt-2 flex items-center gap-1.5 font-mono text-[10px] text-primary">
-                    <Hash className="h-3 w-3" /> {b.hash}
-                  </div>
+                  <button onClick={() => remove(b.id)} aria-label="Delete" className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100">
+                    <Trash2 className="h-4 w-4" />
+                  </button>
                 </div>
-                <button onClick={() => remove(b.id)} aria-label="Delete" className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100">
-                  <Trash2 className="h-4 w-4" />
-                </button>
+                <div className="mt-3 flex items-center gap-2">
+                  <button onClick={() => download(b)} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border bg-background/50 px-3 py-1.5 text-xs font-semibold transition-colors hover:border-primary hover:text-primary">
+                    <Download className="h-3.5 w-3.5" /> Download
+                  </button>
+                  <button onClick={() => share(b)} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-gradient-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+                    <Share2 className="h-3.5 w-3.5" /> Share
+                  </button>
+                </div>
               </div>
             ))}
           </div>

@@ -4,7 +4,59 @@ import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
 import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
-import { FlaskConical, Upload, FileText, Download, Trash2, Tag } from "lucide-react";
+import { FlaskConical, Upload, FileText, Download, Trash2, Tag, Brain, Cpu, Bot, ShieldCheck, ArrowUpRight, Building2, BookOpen, Wrench } from "lucide-react";
+
+
+const DOMAINS = [
+  {
+    id: "ml",
+    name: "Machine Learning",
+    icon: Brain,
+    color: "from-blue-500 to-cyan-400",
+    blurb: "Models that learn patterns from data — regression, classification, deep nets.",
+    concepts: ["Supervised vs Unsupervised", "Neural networks", "Gradient descent", "Overfitting & regularization", "Evaluation metrics"],
+    tools: ["Python", "scikit-learn", "PyTorch", "TensorFlow", "Jupyter"],
+    realworld: "Recommendations (Netflix), fraud detection (Stripe), medical imaging.",
+    companies: ["Google", "OpenAI", "Meta AI", "Anthropic", "Tesla"],
+    resources: ["fast.ai course", "Andrew Ng — Coursera ML", "Kaggle competitions"],
+  },
+  {
+    id: "ai",
+    name: "Artificial Intelligence",
+    icon: Cpu,
+    color: "from-violet-500 to-fuchsia-500",
+    blurb: "Reasoning systems — LLMs, agents, planning, computer vision, NLP.",
+    concepts: ["Transformers", "Prompt engineering", "RAG", "Agentic workflows", "Multi-modal models"],
+    tools: ["LangChain", "LlamaIndex", "Hugging Face", "OpenAI API", "Vector DBs"],
+    realworld: "ChatGPT, Copilot, autonomous agents, image generation.",
+    companies: ["OpenAI", "Anthropic", "DeepMind", "Mistral", "Cohere"],
+    resources: ["DeepLearning.AI", "Hugging Face course", "Papers with Code"],
+  },
+  {
+    id: "robotics",
+    name: "Robotics",
+    icon: Bot,
+    color: "from-amber-500 to-orange-500",
+    blurb: "Sense, plan, act — embedded systems, control, kinematics, ROS.",
+    concepts: ["Kinematics & dynamics", "SLAM", "PID control", "Sensor fusion", "Path planning"],
+    tools: ["ROS 2", "Gazebo", "Arduino", "Raspberry Pi", "C++/Python"],
+    realworld: "Warehouse robots (Amazon), surgical robots, drones, autonomous cars.",
+    companies: ["Boston Dynamics", "iRobot", "ABB", "Tesla", "Waymo"],
+    resources: ["ROS tutorials", "Modern Robotics — Coursera", "MIT OCW 6.832"],
+  },
+  {
+    id: "cyber",
+    name: "Cybersecurity",
+    icon: ShieldCheck,
+    color: "from-emerald-500 to-teal-500",
+    blurb: "Defend systems — pentesting, network security, cryptography, threat hunting.",
+    concepts: ["OWASP Top 10", "Cryptography", "Network security", "Threat modeling", "Incident response"],
+    tools: ["Burp Suite", "Wireshark", "Metasploit", "Nmap", "Kali Linux"],
+    realworld: "Bug bounties, SOC operations, red-team / blue-team engagements.",
+    companies: ["CrowdStrike", "Palo Alto", "Cloudflare", "Google Project Zero"],
+    resources: ["TryHackMe", "HackTheBox", "PortSwigger Web Academy"],
+  },
+] as const;
 
 export const Route = createFileRoute("/tools/labs")({
   head: () => ({
@@ -50,7 +102,19 @@ function Labs() {
         <h1 className="mt-4 flex items-center gap-3 font-display text-4xl font-bold">
           <FlaskConical className="h-8 w-8 text-primary" /> Labs
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Share PDFs, assignments, and notes with your hub.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Explore frontier domains, then share PDFs and notes with your hub.</p>
+
+        {/* Domain Cards */}
+        <section className="mt-10">
+          <div className="flex items-end justify-between">
+            <h2 className="font-display text-2xl font-bold">Explore Domains</h2>
+            <span className="text-xs text-muted-foreground">{DOMAINS.length} fields · click to expand</span>
+          </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {DOMAINS.map((d) => <DomainCard key={d.id} d={d} />)}
+          </div>
+        </section>
+
 
         {/* Uploader */}
         <div className="mt-8 grid gap-4 rounded-2xl border border-border bg-card p-6 shadow-card md:grid-cols-[1fr_auto]">
@@ -117,6 +181,54 @@ function Labs() {
         </div>
       </main>
       <Footer />
+    </div>
+  );
+}
+
+type Domain = (typeof DOMAINS)[number];
+
+function DomainCard({ d }: { d: Domain }) {
+  const [open, setOpen] = useState(false);
+  const Icon = d.icon;
+  return (
+    <div className={`group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-elegant ${open ? "border-primary/60" : ""}`}>
+      <button onClick={() => setOpen((v) => !v)} className="flex w-full items-start gap-4 p-5 text-left">
+        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${d.color} shadow-glow`}>
+          <Icon className="h-6 w-6 text-white" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-display text-lg font-bold">{d.name}</h3>
+            <ArrowUpRight className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`} />
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">{d.blurb}</p>
+        </div>
+      </button>
+      {open && (
+        <div className="grid gap-4 border-t border-border bg-background/40 p-5 text-sm md:grid-cols-2">
+          <Block icon={BookOpen} title="Core concepts" items={[...d.concepts]} />
+          <Block icon={Wrench} title="Tools" items={[...d.tools]} />
+          <div className="rounded-xl border border-border bg-card p-4 md:col-span-2">
+            <div className="text-xs font-semibold uppercase tracking-widest text-primary">Real-world usage</div>
+            <p className="mt-2 text-sm text-muted-foreground">{d.realworld}</p>
+          </div>
+          <Block icon={Building2} title="Companies hiring" items={[...d.companies]} />
+          <Block icon={FlaskConical} title="Hands-on resources" items={[...d.resources]} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Block({ icon: I, title, items }: { icon: typeof BookOpen; title: string; items: string[] }) {
+  return (
+    <div className="rounded-xl border border-border bg-card p-4">
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary">
+        <I className="h-3.5 w-3.5" /> {title}
+      </div>
+      <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+        {items.map((i) => <li key={i} className="flex gap-2"><span className="text-primary">•</span>{i}</li>)}
+      </ul>
     </div>
   );
 }

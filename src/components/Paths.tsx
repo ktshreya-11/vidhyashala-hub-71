@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Code2, ShieldCheck, Briefcase, Radio, ArrowUpRight } from "lucide-react";
+import { Code2, ShieldCheck, Briefcase, Boxes, ArrowUpRight } from "lucide-react";
 
 const paths = [
   {
@@ -12,10 +12,10 @@ const paths = [
   },
   {
     to: "/paths/live-collaboration",
-    icon: Radio,
-    title: "Live Collaboration",
-    tag: "Distributed Teams",
-    desc: "A war-room UI for global, distributed teams — kanban, presence, and chat in one canvas.",
+    icon: Boxes,
+    title: "Web Development",
+    tag: "MERN · MEAN · Live Preview",
+    desc: "Full-stack courses (MERN/MEAN) with a built-in coding environment and instant live preview iframe.",
     accent: "from-primary-glow to-primary",
   },
   {
