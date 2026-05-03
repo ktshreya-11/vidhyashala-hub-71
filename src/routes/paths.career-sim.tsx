@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PathLayout } from "@/components/PathLayout";
+import { awardBadge } from "@/hooks/use-badges";
 import { Button } from "@/components/ui/button";
 import {
   Compass,
@@ -117,6 +118,15 @@ function CareerSim() {
     const next = { ...completed, [activeId]: cur };
     setCompleted(next);
     localStorage.setItem("vidyashala_career_progress", JSON.stringify(next));
+    if (cur.length === active.steps.length) {
+      awardBadge({
+        id: `course-${active.id}`,
+        title: `${active.title} Course`,
+        topic: active.title,
+        difficulty: "Course",
+        icon: "🎓",
+      });
+    }
   };
 
   const progress = Math.round((activeCompleted.length / active.steps.length) * 100);
