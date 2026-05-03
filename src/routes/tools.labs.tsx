@@ -184,3 +184,51 @@ function Labs() {
     </div>
   );
 }
+
+type Domain = (typeof DOMAINS)[number];
+
+function DomainCard({ d }: { d: Domain }) {
+  const [open, setOpen] = useState(false);
+  const Icon = d.icon;
+  return (
+    <div className={`group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-elegant ${open ? "border-primary/60" : ""}`}>
+      <button onClick={() => setOpen((v) => !v)} className="flex w-full items-start gap-4 p-5 text-left">
+        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${d.color} shadow-glow`}>
+          <Icon className="h-6 w-6 text-white" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-display text-lg font-bold">{d.name}</h3>
+            <ArrowUpRight className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-90" : ""}`} />
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">{d.blurb}</p>
+        </div>
+      </button>
+      {open && (
+        <div className="grid gap-4 border-t border-border bg-background/40 p-5 text-sm md:grid-cols-2">
+          <Block icon={BookOpen} title="Core concepts" items={d.concepts} />
+          <Block icon={Wrench} title="Tools" items={d.tools} />
+          <div className="rounded-xl border border-border bg-card p-4 md:col-span-2">
+            <div className="text-xs font-semibold uppercase tracking-widest text-primary">Real-world usage</div>
+            <p className="mt-2 text-sm text-muted-foreground">{d.realworld}</p>
+          </div>
+          <Block icon={Building2} title="Companies hiring" items={[...d.companies]} />
+          <Block icon={FlaskConical} title="Hands-on resources" items={[...d.resources]} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Block({ icon: I, title, items }: { icon: typeof BookOpen; title: string; items: string[] }) {
+  return (
+    <div className="rounded-xl border border-border bg-card p-4">
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary">
+        <I className="h-3.5 w-3.5" /> {title}
+      </div>
+      <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+        {items.map((i) => <li key={i} className="flex gap-2"><span className="text-primary">•</span>{i}</li>)}
+      </ul>
+    </div>
+  );
+}
