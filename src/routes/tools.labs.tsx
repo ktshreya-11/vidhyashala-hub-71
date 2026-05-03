@@ -206,8 +206,8 @@ function DomainCard({ d }: { d: Domain }) {
       </button>
       {open && (
         <div className="grid gap-4 border-t border-border bg-background/40 p-5 text-sm md:grid-cols-2">
-          <Block icon={BookOpen} title="Core concepts" items={d.concepts} />
-          <Block icon={Wrench} title="Tools" items={d.tools} />
+          <Block icon={BookOpen} title="Core concepts" items={[...d.concepts]} />
+          <Block icon={Wrench} title="Tools" items={[...d.tools]} />
           <div className="rounded-xl border border-border bg-card p-4 md:col-span-2">
             <div className="text-xs font-semibold uppercase tracking-widest text-primary">Real-world usage</div>
             <p className="mt-2 text-sm text-muted-foreground">{d.realworld}</p>
