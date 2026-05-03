@@ -102,7 +102,19 @@ function Labs() {
         <h1 className="mt-4 flex items-center gap-3 font-display text-4xl font-bold">
           <FlaskConical className="h-8 w-8 text-primary" /> Labs
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Share PDFs, assignments, and notes with your hub.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Explore frontier domains, then share PDFs and notes with your hub.</p>
+
+        {/* Domain Cards */}
+        <section className="mt-10">
+          <div className="flex items-end justify-between">
+            <h2 className="font-display text-2xl font-bold">Explore Domains</h2>
+            <span className="text-xs text-muted-foreground">{DOMAINS.length} fields · click to expand</span>
+          </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {DOMAINS.map((d) => <DomainCard key={d.id} d={d} />)}
+          </div>
+        </section>
+
 
         {/* Uploader */}
         <div className="mt-8 grid gap-4 rounded-2xl border border-border bg-card p-6 shadow-card md:grid-cols-[1fr_auto]">
