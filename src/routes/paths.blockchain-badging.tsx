@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { PathLayout } from "@/components/PathLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ShieldCheck, ShieldAlert, Trash2, Plus, Hash, Search } from "lucide-react";
+import { ShieldCheck, ShieldAlert, Trash2, Plus, Hash, Search, Download, Share2, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/paths/blockchain-badging")({
   head: () => ({
