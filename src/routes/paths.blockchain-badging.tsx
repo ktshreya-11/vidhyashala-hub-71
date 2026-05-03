@@ -60,6 +60,45 @@ function Badging() {
 
   const remove = (id: string) => persist(badges.filter((b) => b.id !== id));
 
+  const SAMPLES: Omit<Badge, "id" | "addedAt">[] = [
+    { name: "Web Development", url: "https://vidyashala.dev/badges/web-dev", hash: fakeHash("web-dev") },
+    { name: "DSA with Python", url: "https://vidyashala.dev/badges/dsa-python", hash: fakeHash("dsa-python") },
+    { name: "MERN Stack", url: "https://vidyashala.dev/badges/mern", hash: fakeHash("mern") },
+    { name: "Cybersecurity Basics", url: "https://vidyashala.dev/badges/cybersec", hash: fakeHash("cybersec") },
+  ];
+
+  const loadSamples = () => {
+    const additions = SAMPLES
+      .filter((s) => !badges.some((b) => b.url === s.url))
+      .map((s) => ({ ...s, id: crypto.randomUUID(), addedAt: Date.now() }));
+    if (additions.length) persist([...additions, ...badges]);
+  };
+
+  const download = (b: Badge) => {
+    const payload = {
+      name: b.name,
+      url: b.url,
+      hash: b.hash,
+      issuedAt: new Date(b.addedAt).toISOString(),
+      issuer: "Vidyashala Hub",
+      verification: "on-chain (mock)",
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${b.name.replace(/\s+/g, "-").toLowerCase()}-badge.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  const share = async (b: Badge) => {
+    const text = `🏆 I earned the "${b.name}" badge on Vidyashala — verified on-chain (${b.hash}). ${b.url}`;
+    try {
+      if (navigator.share) await navigator.share({ title: b.name, text, url: b.url });
+      else { await navigator.clipboard.writeText(text); alert("Share text copied to clipboard"); }
+    } catch { /* user cancelled */ }
+  };
+
   const verify = (e: React.FormEvent) => {
     e.preventDefault();
     if (!verifyUrl.trim()) return;
