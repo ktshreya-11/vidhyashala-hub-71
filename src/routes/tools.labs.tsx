@@ -4,7 +4,59 @@ import { TopNav } from "@/components/TopNav";
 import { Footer } from "@/components/Footer";
 import { BackButton } from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
-import { FlaskConical, Upload, FileText, Download, Trash2, Tag } from "lucide-react";
+import { FlaskConical, Upload, FileText, Download, Trash2, Tag, Brain, Cpu, Bot, ShieldCheck, ArrowUpRight, Building2, BookOpen, Wrench } from "lucide-react";
+import { useState as useReactState } from "react";
+
+const DOMAINS = [
+  {
+    id: "ml",
+    name: "Machine Learning",
+    icon: Brain,
+    color: "from-blue-500 to-cyan-400",
+    blurb: "Models that learn patterns from data — regression, classification, deep nets.",
+    concepts: ["Supervised vs Unsupervised", "Neural networks", "Gradient descent", "Overfitting & regularization", "Evaluation metrics"],
+    tools: ["Python", "scikit-learn", "PyTorch", "TensorFlow", "Jupyter"],
+    realworld: "Recommendations (Netflix), fraud detection (Stripe), medical imaging.",
+    companies: ["Google", "OpenAI", "Meta AI", "Anthropic", "Tesla"],
+    resources: ["fast.ai course", "Andrew Ng — Coursera ML", "Kaggle competitions"],
+  },
+  {
+    id: "ai",
+    name: "Artificial Intelligence",
+    icon: Cpu,
+    color: "from-violet-500 to-fuchsia-500",
+    blurb: "Reasoning systems — LLMs, agents, planning, computer vision, NLP.",
+    concepts: ["Transformers", "Prompt engineering", "RAG", "Agentic workflows", "Multi-modal models"],
+    tools: ["LangChain", "LlamaIndex", "Hugging Face", "OpenAI API", "Vector DBs"],
+    realworld: "ChatGPT, Copilot, autonomous agents, image generation.",
+    companies: ["OpenAI", "Anthropic", "DeepMind", "Mistral", "Cohere"],
+    resources: ["DeepLearning.AI", "Hugging Face course", "Papers with Code"],
+  },
+  {
+    id: "robotics",
+    name: "Robotics",
+    icon: Bot,
+    color: "from-amber-500 to-orange-500",
+    blurb: "Sense, plan, act — embedded systems, control, kinematics, ROS.",
+    concepts: ["Kinematics & dynamics", "SLAM", "PID control", "Sensor fusion", "Path planning"],
+    tools: ["ROS 2", "Gazebo", "Arduino", "Raspberry Pi", "C++/Python"],
+    realworld: "Warehouse robots (Amazon), surgical robots, drones, autonomous cars.",
+    companies: ["Boston Dynamics", "iRobot", "ABB", "Tesla", "Waymo"],
+    resources: ["ROS tutorials", "Modern Robotics — Coursera", "MIT OCW 6.832"],
+  },
+  {
+    id: "cyber",
+    name: "Cybersecurity",
+    icon: ShieldCheck,
+    color: "from-emerald-500 to-teal-500",
+    blurb: "Defend systems — pentesting, network security, cryptography, threat hunting.",
+    concepts: ["OWASP Top 10", "Cryptography", "Network security", "Threat modeling", "Incident response"],
+    tools: ["Burp Suite", "Wireshark", "Metasploit", "Nmap", "Kali Linux"],
+    realworld: "Bug bounties, SOC operations, red-team / blue-team engagements.",
+    companies: ["CrowdStrike", "Palo Alto", "Cloudflare", "Google Project Zero"],
+    resources: ["TryHackMe", "HackTheBox", "PortSwigger Web Academy"],
+  },
+] as const;
 
 export const Route = createFileRoute("/tools/labs")({
   head: () => ({
