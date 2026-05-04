@@ -37,12 +37,6 @@ export function TopNav() {
               </div>
               <span className="hidden font-display text-xl font-bold tracking-tight sm:inline">Vidyashala</span>
             </Link>
-            <Link to="/" activeOptions={{ exact: true }}
-              activeProps={{ className: "bg-primary/10 text-primary border-primary/30" }}
-              aria-label="Home" title="Home"
-              className="ml-1 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-all hover:border-primary/60 hover:bg-primary/10 hover:text-primary">
-              <Home className="h-4 w-4" />
-            </Link>
           </div>
 
           <div className="mx-auto hidden flex-1 max-w-md md:block">
