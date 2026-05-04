@@ -91,8 +91,8 @@ export function TopNav() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" className="rounded-full px-2.5">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-primary text-[11px] font-bold text-primary-foreground">
-                      {user.name.slice(0, 1).toUpperCase()}
+                    <span className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-gradient-primary text-[11px] font-bold text-primary-foreground">
+                      <img src={`https://i.pravatar.cc/80?u=${encodeURIComponent(user.email || user.name)}`} alt={user.name} className="absolute inset-0 h-full w-full object-cover" />
                     </span>
                     <span className="ml-2 hidden text-xs font-semibold sm:inline">{user.name.split(" ")[0]}</span>
                   </Button>
