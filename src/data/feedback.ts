@@ -8,15 +8,18 @@ export type FeedbackUser = {
   joinedYear: number;
   badges: string[];
   color: string;
+  avatar: string;
 };
 
+const av = (seed: string) => `https://i.pravatar.cc/200?u=${seed}`;
+
 export const USERS: Record<string, FeedbackUser> = {
-  aarav: { username: "aarav", name: "Aarav Shah", role: "Frontend Engineer · DSA Lab", bio: "Building hubs that help students learn faster. React, TS, design systems.", city: "Bengaluru", joinedYear: 2024, badges: ["DSA Streak 30", "Hub Leader", "Open Source"], color: "from-primary to-primary-glow" },
-  mei: { username: "mei", name: "Mei Lin", role: "Product Designer", bio: "Designing calm UI for chaotic minds. Currently exploring micro-interactions.", city: "Singapore", joinedYear: 2023, badges: ["Design Streak", "Career Sim Top 10"], color: "from-primary-glow to-primary" },
-  diego: { username: "diego", name: "Diego Ramirez", role: "Backend & DB", bio: "Postgres enjoyer. Writing about distributed systems on the side.", city: "Mexico City", joinedYear: 2022, badges: ["Backend Pro", "Mentor"], color: "from-primary to-primary-glow" },
-  lena: { username: "lena", name: "Lena Krause", role: "QA Lead", bio: "Breaking things so users don't have to. ISTQB certified.", city: "Berlin", joinedYear: 2024, badges: ["Bug Hunter", "Reliable Reviewer"], color: "from-primary-glow to-primary" },
-  yuki: { username: "yuki", name: "Yuki Tanaka", role: "DevOps", bio: "Pipelines, observability, and good naps.", city: "Tokyo", joinedYear: 2023, badges: ["DevOps Hero"], color: "from-primary to-primary-glow" },
-  priya: { username: "priya", name: "Priya Iyer", role: "Student · UPSC Prep", bio: "Civils aspirant. Sharing notes & motivation here.", city: "Chennai", joinedYear: 2025, badges: ["Note Taker", "Daily Streak"], color: "from-primary-glow to-primary" },
+  aarav: { username: "aarav", name: "Aarav Shah", role: "Frontend Engineer · DSA Lab", bio: "Building hubs that help students learn faster. React, TS, design systems.", city: "Bengaluru", joinedYear: 2024, badges: ["DSA Streak 30", "Hub Leader", "Open Source"], color: "from-primary to-primary-glow", avatar: av("aarav-shah") },
+  mei: { username: "mei", name: "Mei Lin", role: "Product Designer", bio: "Designing calm UI for chaotic minds. Currently exploring micro-interactions.", city: "Singapore", joinedYear: 2023, badges: ["Design Streak", "Career Sim Top 10"], color: "from-primary-glow to-primary", avatar: av("mei-lin") },
+  diego: { username: "diego", name: "Diego Ramirez", role: "Backend & DB", bio: "Postgres enjoyer. Writing about distributed systems on the side.", city: "Mexico City", joinedYear: 2022, badges: ["Backend Pro", "Mentor"], color: "from-primary to-primary-glow", avatar: av("diego-ramirez") },
+  lena: { username: "lena", name: "Lena Krause", role: "QA Lead", bio: "Breaking things so users don't have to. ISTQB certified.", city: "Berlin", joinedYear: 2024, badges: ["Bug Hunter", "Reliable Reviewer"], color: "from-primary-glow to-primary", avatar: av("lena-krause") },
+  yuki: { username: "yuki", name: "Yuki Tanaka", role: "DevOps", bio: "Pipelines, observability, and good naps.", city: "Tokyo", joinedYear: 2023, badges: ["DevOps Hero"], color: "from-primary to-primary-glow", avatar: av("yuki-tanaka") },
+  priya: { username: "priya", name: "Priya Iyer", role: "Student · UPSC Prep", bio: "Civils aspirant. Sharing notes & motivation here.", city: "Chennai", joinedYear: 2025, badges: ["Note Taker", "Daily Streak"], color: "from-primary-glow to-primary", avatar: av("priya-iyer") },
 };
 
 export type Post = { id: string; user: string; text: string; likes: number; tag: string; at: number };
