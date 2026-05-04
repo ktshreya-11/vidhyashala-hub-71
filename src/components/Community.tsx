@@ -47,9 +47,9 @@ export function Community() {
                     aria-label={`Visit ${u.name}'s profile`}
                   >
                     <div
-                      className={`flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br ${u.color} text-sm font-bold text-primary-foreground shadow-glow transition-transform hover:scale-110`}
+                      className={`relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br ${u.color} text-sm font-bold text-primary-foreground shadow-glow transition-transform hover:scale-110`}
                     >
-                      {u.name.split(" ").map((n) => n[0]).join("")}
+                      <img src={u.avatar} alt={u.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                     </div>
                   </Link>
                   <div className="min-w-0 flex-1">
