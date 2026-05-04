@@ -61,8 +61,8 @@ function Profile() {
         <div className="mx-auto max-w-4xl px-6">
           {/* Profile header */}
           <div className="-mt-16 flex flex-col items-start gap-6 md:flex-row md:items-end">
-            <div className={`flex h-32 w-32 items-center justify-center rounded-3xl bg-gradient-to-br ${user.color} font-display text-4xl font-bold text-primary-foreground shadow-elegant ring-8 ring-background`}>
-              {user.name.split(" ").map((n) => n[0]).join("")}
+            <div className={`relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br ${user.color} font-display text-4xl font-bold text-primary-foreground shadow-elegant ring-8 ring-background`}>
+              <img src={user.avatar} alt={user.name} className="absolute inset-0 h-full w-full object-cover" />
             </div>
             <div className="pb-2">
               <h1 className="font-display text-3xl font-bold">{user.name}</h1>

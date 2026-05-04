@@ -37,12 +37,6 @@ export function TopNav() {
               </div>
               <span className="hidden font-display text-xl font-bold tracking-tight sm:inline">Vidyashala</span>
             </Link>
-            <Link to="/" activeOptions={{ exact: true }}
-              activeProps={{ className: "bg-primary/10 text-primary border-primary/30" }}
-              aria-label="Home" title="Home"
-              className="ml-1 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-all hover:border-primary/60 hover:bg-primary/10 hover:text-primary">
-              <Home className="h-4 w-4" />
-            </Link>
           </div>
 
           <div className="mx-auto hidden flex-1 max-w-md md:block">
@@ -97,8 +91,8 @@ export function TopNav() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" className="rounded-full px-2.5">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-primary text-[11px] font-bold text-primary-foreground">
-                      {user.name.slice(0, 1).toUpperCase()}
+                    <span className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-gradient-primary text-[11px] font-bold text-primary-foreground">
+                      <img src={`https://i.pravatar.cc/80?u=${encodeURIComponent(user.email || user.name)}`} alt={user.name} className="absolute inset-0 h-full w-full object-cover" />
                     </span>
                     <span className="ml-2 hidden text-xs font-semibold sm:inline">{user.name.split(" ")[0]}</span>
                   </Button>

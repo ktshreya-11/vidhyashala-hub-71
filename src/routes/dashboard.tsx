@@ -43,8 +43,8 @@ function Dashboard() {
             </div>
             <div className="relative -mt-12 px-6 pb-6 md:flex md:items-end md:justify-between md:gap-6">
               <div className="flex items-end gap-4">
-                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border-4 border-card bg-gradient-primary text-2xl font-bold text-primary-foreground shadow-glow">
-                  {initials || "VH"}
+                <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-4 border-card bg-gradient-primary text-2xl font-bold text-primary-foreground shadow-glow">
+                  <img src={`https://i.pravatar.cc/200?u=${encodeURIComponent(profile.name || "vidyashala")}`} alt={profile.name} className="absolute inset-0 h-full w-full object-cover" />
                 </div>
                 <div className="pb-2">
                   <p className="text-xs text-muted-foreground">Welcome back 👋</p>
