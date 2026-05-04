@@ -81,8 +81,8 @@ function Feedback() {
                 <article key={p.id} className="rounded-2xl border border-border bg-card p-5 shadow-card transition-colors hover:border-primary/40">
                   <header className="flex items-center gap-3">
                     <Link to="/u/$username" params={{ username: u.username }} className="shrink-0">
-                      <div className={`flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br ${u.color} text-sm font-bold text-primary-foreground transition-transform hover:scale-110 shadow-glow`}>
-                        {u.name.split(" ").map((n) => n[0]).join("")}
+                      <div className={`relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br ${u.color} text-sm font-bold text-primary-foreground transition-transform hover:scale-110 shadow-glow`}>
+                        <img src={u.avatar} alt={u.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                       </div>
                     </Link>
                     <div className="min-w-0 flex-1">
