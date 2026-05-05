@@ -14,7 +14,99 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      drafts: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          id?: string
+          user_id: string
+          version?: number
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: []
+      }
+      group_rooms: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          shared_text: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          shared_text?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          shared_text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          exam_mode: boolean
+          id: string
+          study_seconds: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          exam_mode?: boolean
+          id: string
+          study_seconds?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          exam_mode?: boolean
+          id?: string
+          study_seconds?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      solutions: {
+        Row: {
+          answer: string
+          question: string
+          question_key: string
+        }
+        Insert: {
+          answer: string
+          question: string
+          question_key: string
+        }
+        Update: {
+          answer?: string
+          question?: string
+          question_key?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
