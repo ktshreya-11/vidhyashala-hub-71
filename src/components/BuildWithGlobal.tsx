@@ -348,7 +348,10 @@ function GroupsPanel() {
 
 /* ---------------- EXAM MODE ---------------- */
 function ExamPanel() {
-  const [on, setOn] = useState(false);
+  const [on, setOn] = useState(() => typeof document !== "undefined" && document.body.classList.contains("exam-mode"));
+
+  // Cleanup if panel unmounts while still on
+  useEffect(() => () => { document.body.classList.remove("exam-mode"); }, []);
 
   const toggle = async () => {
     const next = !on;
