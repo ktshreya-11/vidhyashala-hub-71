@@ -172,8 +172,8 @@
 }
 .animate-mascot-float { animation: mascot-float 5s ease-in-out infinite; transform-style: preserve-3d; }
 
-/* Exam Mode: hide navigation chrome */
-body.exam-mode header,
-body.exam-mode nav,
-body.exam-mode aside,
-body.exam-mode footer { display: none !important; }
+
+/* Exam Mode: hide top nav, sidebar, and footer chrome only */
+body.exam-mode > div > header,
+body.exam-mode > div > footer,
+body.exam-mode aside { display: none !important; }
