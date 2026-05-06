@@ -75,6 +75,7 @@ function RootComponent() {
     <>
       <Outlet />
       <Sidekick />
+      <Toaster richColors position="top-right" />
     </>
   );
 }
