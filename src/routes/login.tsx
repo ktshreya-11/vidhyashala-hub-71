@@ -158,8 +158,8 @@ function LoginPage() {
               </div>
             </div>
             {err && <div className="rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">{err}</div>}
-            <Button type="submit" className="w-full bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-90">
-              Sign in <ArrowRight className="ml-1 h-4 w-4" />
+            <Button type="submit" disabled={busy} className="w-full bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-90">
+              {busy ? "Signing in..." : <>Sign in <ArrowRight className="ml-1 h-4 w-4" /></>}
             </Button>
           </form>
 
