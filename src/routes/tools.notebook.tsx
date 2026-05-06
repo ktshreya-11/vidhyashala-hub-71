@@ -6,7 +6,8 @@ import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Notebook as NotebookIcon, Plus, Trash2, Pin, ImagePlus, X, Download, Share2 } from "lucide-react";
+import { Whiteboard } from "@/components/Whiteboard";
+import { Notebook as NotebookIcon, Plus, Trash2, Pin, ImagePlus, X, Download, Share2, PenTool, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/tools/notebook")({
   head: () => ({
