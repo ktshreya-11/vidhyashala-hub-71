@@ -233,6 +233,8 @@ function Notebook() {
               ))}
             </div>
           )}
+          </>
+          )}
         </div>
       </main>
       <Footer />
