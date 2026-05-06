@@ -119,6 +119,28 @@ function Notebook() {
         </section>
 
         <div className="mx-auto w-full max-w-7xl px-6 py-10">
+          <div className="mb-6 inline-flex rounded-full border border-border bg-card p-1 text-xs">
+            {([
+              { k: "notes", label: "Notes", Icon: FileText },
+              { k: "whiteboard", label: "Whiteboard", Icon: PenTool },
+            ] as const).map(({ k, label, Icon }) => (
+              <button
+                key={k}
+                onClick={() => setTab(k)}
+                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-semibold transition-all ${
+                  tab === k ? "bg-gradient-primary text-primary-foreground shadow-glow" : "text-muted-foreground"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {tab === "whiteboard" ? (
+            <Whiteboard />
+          ) : (
+          <>
           <form onSubmit={add} className="rounded-2xl border border-border bg-card p-5 shadow-card">
             <Input
               value={title}
