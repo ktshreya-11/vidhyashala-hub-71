@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { GraduationCap, Briefcase, Mail, Phone, Lock, ArrowRight, Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth, type AuthRole } from "@/hooks/use-auth";
+import { useAuth, type AuthRole, signInWithEmail } from "@/hooks/use-auth";
 import { useProfile } from "@/hooks/use-profile";
 import { Mascot } from "@/components/Mascot";
 import { BackButton } from "@/components/BackButton";
@@ -29,40 +30,30 @@ function LoginPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const finish = (provider: "email" | "google" | "phone", name: string, identity: string) => {
-    login({
-      name,
-      email: provider === "phone" ? "" : identity,
-      phone: provider === "phone" ? identity : "",
-      role,
-      provider,
-      joinedAt: Date.now(),
-    });
-    setRole(role);
-    setProfile({ name, username: name.toLowerCase().replace(/\s+/g, "-").slice(0, 20) || "user" });
-    navigate({ to: "/dashboard" });
-  };
-
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr("");
-    if (tab === "email") {
-      if (!email.includes("@") || password.length < 6) {
-        setErr("Enter a valid email and 6+ char password.");
-        return;
-      }
-      finish("email", email.split("@")[0], email);
-    } else {
-      if (phone.replace(/\D/g, "").length < 10 || password.length < 4) {
-        setErr("Enter a 10-digit phone and 4+ digit OTP/password.");
-        return;
-      }
-      finish("phone", "User " + phone.slice(-4), phone);
+    if (tab !== "email") { setErr("Phone login not enabled — please use email."); return; }
+    if (!email.includes("@") || password.length < 6) { setErr("Enter a valid email and 6+ char password."); return; }
+    setBusy(true);
+    try {
+      await signInWithEmail({ email, password });
+      const name = email.split("@")[0];
+      login({ role, provider: "email", name });
+      setRole(role);
+      setProfile({ name, username: name.toLowerCase().slice(0, 20) });
+      toast.success("Welcome back!");
+      navigate({ to: "/dashboard" });
+    } catch (e: any) {
+      setErr(e?.message || "Sign in failed");
+    } finally {
+      setBusy(false);
     }
   };
 
-  const google = () => finish("google", "Google User", "user@gmail.com");
+  const google = () => toast.info("Google sign-in is not configured yet — use email.");
 
   return (
     <div className="min-h-screen bg-gradient-hero">
