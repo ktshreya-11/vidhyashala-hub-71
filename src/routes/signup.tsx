@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { GraduationCap, Briefcase, Mail, Phone, Lock, User, ArrowRight, Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth, type AuthRole } from "@/hooks/use-auth";
+import { useAuth, type AuthRole, signUpWithEmail } from "@/hooks/use-auth";
 import { useProfile } from "@/hooks/use-profile";
 import { Mascot } from "@/components/Mascot";
 import { BackButton } from "@/components/BackButton";
@@ -30,35 +31,30 @@ function SignupPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const finish = (provider: "email" | "google" | "phone", finalName: string, identity: string) => {
-    login({
-      name: finalName,
-      email: provider === "phone" ? "" : identity,
-      phone: provider === "phone" ? identity : "",
-      role,
-      provider,
-      joinedAt: Date.now(),
-    });
-    setRole(role);
-    setProfile({ name: finalName, username: finalName.toLowerCase().replace(/\s+/g, "-").slice(0, 20) || "user" });
-    navigate({ to: "/dashboard" });
-  };
-
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr("");
     if (!name.trim()) { setErr("Please enter your name."); return; }
-    if (tab === "email") {
-      if (!email.includes("@") || password.length < 6) { setErr("Valid email + 6+ char password required."); return; }
-      finish("email", name.trim(), email);
-    } else {
-      if (phone.replace(/\D/g, "").length < 10 || password.length < 4) { setErr("10-digit phone + 4+ char password/OTP."); return; }
-      finish("phone", name.trim(), phone);
+    if (tab !== "email") { setErr("Phone signup not enabled — please use email."); return; }
+    if (!email.includes("@") || password.length < 6) { setErr("Valid email + 6+ char password required."); return; }
+    setBusy(true);
+    try {
+      await signUpWithEmail({ email, password, name: name.trim(), role });
+      login({ role, provider: "email", name: name.trim() });
+      setRole(role);
+      setProfile({ name: name.trim(), username: name.trim().toLowerCase().replace(/\s+/g, "-").slice(0, 20) || "user" });
+      toast.success("Welcome to Vidyashala!");
+      navigate({ to: "/dashboard" });
+    } catch (e: any) {
+      setErr(e?.message || "Sign up failed");
+    } finally {
+      setBusy(false);
     }
   };
 
-  const google = () => finish("google", name.trim() || "Google User", "user@gmail.com");
+  const google = () => toast.info("Google sign-in is not configured yet — use email.");
 
   return (
     <div className="min-h-screen bg-gradient-hero">
