@@ -1,7 +1,9 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export type AuthRole = "student" | "professional";
 export type AuthUser = {
+  id: string;
   name: string;
   email: string;
   phone?: string;
@@ -11,51 +13,74 @@ export type AuthUser = {
   joinedAt: number;
 };
 
-const KEY = "vidyashala_auth_user";
-const EVENT = "vidyashala:auth";
+const META_KEY = "vidyashala_auth_meta"; // role+provider+name fallback
 
-let cachedRaw: string | null = null;
-let cachedUser: AuthUser | null = null;
+type Meta = { role: AuthRole; provider: AuthUser["provider"]; name?: string };
 
-function read(): AuthUser | null {
-  if (typeof window === "undefined") return null;
+function readMeta(): Meta {
+  if (typeof window === "undefined") return { role: "student", provider: "email" };
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw === cachedRaw) return cachedUser;
-    cachedRaw = raw;
-    cachedUser = raw ? (JSON.parse(raw) as AuthUser) : null;
-    return cachedUser;
+    return { role: "student", provider: "email", ...JSON.parse(localStorage.getItem(META_KEY) || "{}") };
   } catch {
-    return cachedUser;
+    return { role: "student", provider: "email" };
   }
 }
 
-function write(u: AuthUser | null) {
-  if (u) localStorage.setItem(KEY, JSON.stringify(u));
-  else localStorage.removeItem(KEY);
-  cachedRaw = u ? JSON.stringify(u) : null;
-  cachedUser = u;
-  window.dispatchEvent(new CustomEvent(EVENT));
+function writeMeta(m: Partial<Meta>) {
+  const cur = readMeta();
+  localStorage.setItem(META_KEY, JSON.stringify({ ...cur, ...m }));
 }
 
-const subscribe = (cb: () => void) => {
-  window.addEventListener(EVENT, cb);
-  window.addEventListener("storage", cb);
-  return () => {
-    window.removeEventListener(EVENT, cb);
-    window.removeEventListener("storage", cb);
+function toUser(session: any | null): AuthUser | null {
+  if (!session?.user) return null;
+  const u = session.user;
+  const meta = readMeta();
+  const name =
+    u.user_metadata?.display_name ||
+    meta.name ||
+    (u.email ? u.email.split("@")[0] : "User");
+  return {
+    id: u.id,
+    name,
+    email: u.email ?? "",
+    phone: u.phone ?? "",
+    role: (u.user_metadata?.role as AuthRole) || meta.role,
+    provider: (u.app_metadata?.provider as AuthUser["provider"]) || meta.provider || "email",
+    avatar: u.user_metadata?.avatar_url,
+    joinedAt: u.created_at ? new Date(u.created_at).getTime() : Date.now(),
   };
-};
-
-const getServerSnapshot = () => null;
+}
 
 export function useAuth() {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
-  const user = useSyncExternalStore(subscribe, read, getServerSnapshot);
 
-  const login = (u: AuthUser) => write(u);
-  const logout = () => write(null);
+  useEffect(() => {
+    let alive = true;
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (!alive) return;
+      setUser(toUser(session));
+      setHydrated(true);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      if (!alive) return;
+      setUser(toUser(data.session));
+      setHydrated(true);
+    });
+    return () => {
+      alive = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
+  // Compatibility with previous API. `login` here doesn't issue auth — call
+  // signUp/signIn directly. We keep it to set local meta + role.
+  const login = (u: Partial<AuthUser> & { role?: AuthRole; name?: string }) => {
+    writeMeta({ role: u.role, provider: u.provider, name: u.name });
+  };
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
 
   return {
     user: hydrated ? user : null,
@@ -64,4 +89,42 @@ export function useAuth() {
     logout,
     hydrated,
   };
+}
+
+// Convenience signup/signin helpers callable from forms.
+export async function signUpWithEmail(opts: {
+  email: string;
+  password: string;
+  name: string;
+  role: AuthRole;
+}) {
+  writeMeta({ role: opts.role, provider: "email", name: opts.name });
+  const { data, error } = await supabase.auth.signUp({
+    email: opts.email,
+    password: opts.password,
+    options: {
+      emailRedirectTo: `${window.location.origin}/dashboard`,
+      data: { display_name: opts.name, role: opts.role },
+    },
+  });
+  if (error) throw error;
+  // Best-effort: ensure profile + user_role rows exist
+  if (data.user) {
+    await supabase.from("profiles").upsert({
+      id: data.user.id,
+      display_name: opts.name,
+      is_professional: opts.role === "professional",
+    });
+    await supabase.from("user_roles").upsert({ user_id: data.user.id, role: opts.role });
+  }
+  return data;
+}
+
+export async function signInWithEmail(opts: { email: string; password: string }) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: opts.email,
+    password: opts.password,
+  });
+  if (error) throw error;
+  return data;
 }

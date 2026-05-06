@@ -20,7 +20,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { title: "Industry Link", path: "/paths/industry-link", description: "Real tasks from professionals", keywords: ["industry", "tasks", "internship", "review", "professional"], category: "Path" },
   { title: "War-Room", path: "/paths/live-collaboration", description: "Live collaboration for global teams", keywords: ["collaboration", "war room", "team", "live", "remote"], category: "Path" },
 
-  { title: "Explore Labs IDE", path: "/tools/ide", description: "Multi-language VS Code style IDE", keywords: ["ide", "editor", "vscode", "monaco", "code"], category: "Tool" },
+  
   { title: "Notebook", path: "/tools/notebook", description: "Quick notes with images", keywords: ["notebook", "notes", "journal"], category: "Tool" },
   { title: "Labs (Files)", path: "/tools/labs", description: "Share PDFs and assignments", keywords: ["labs", "pdf", "assignments", "files"], category: "Tool" },
 ];
