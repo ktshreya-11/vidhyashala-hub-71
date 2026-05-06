@@ -29,6 +29,7 @@ const COLORS = [
 ];
 
 function Notebook() {
+  const [tab, setTab] = useState<"notes" | "whiteboard">("notes");
   const [notes, setNotes] = useState<Note[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
