@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      courses: {
+        Row: {
+          career: string
+          created_at: string
+          description: string
+          id: string
+          position: number
+          title: string
+        }
+        Insert: {
+          career: string
+          created_at?: string
+          description?: string
+          id?: string
+          position?: number
+          title: string
+        }
+        Update: {
+          career?: string
+          created_at?: string
+          description?: string
+          id?: string
+          position?: number
+          title?: string
+        }
+        Relationships: []
+      }
       drafts: {
         Row: {
           content: string
@@ -62,28 +89,139 @@ export type Database = {
         }
         Relationships: []
       }
+      kanban_cards: {
+        Row: {
+          board_key: string
+          column_key: string
+          created_at: string
+          created_by: string | null
+          id: string
+          position: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          board_key?: string
+          column_key?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          position?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          board_key?: string
+          column_key?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          position?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      mentor_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          mentor_id: string
+          scheduled_at: string
+          status: string
+          student_id: string
+          topic: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mentor_id: string
+          scheduled_at: string
+          status?: string
+          student_id: string
+          topic?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mentor_id?: string
+          scheduled_at?: string
+          status?: string
+          student_id?: string
+          topic?: string
+        }
+        Relationships: []
+      }
+      micro_challenges: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          link: string
+          reviewed_at: string | null
+          reviewer_id: string | null
+          status: string
+          student_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          link: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+          student_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          link?: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+          student_id?: string
+          title?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
+          bio: string | null
           created_at: string
           display_name: string | null
           exam_mode: boolean
+          expertise: string | null
           id: string
+          is_professional: boolean
           study_seconds: number
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           display_name?: string | null
           exam_mode?: boolean
+          expertise?: string | null
           id: string
+          is_professional?: boolean
           study_seconds?: number
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           display_name?: string | null
           exam_mode?: boolean
+          expertise?: string | null
           id?: string
+          is_professional?: boolean
           study_seconds?: number
           updated_at?: string
         }
@@ -107,15 +245,105 @@ export type Database = {
         }
         Relationships: []
       }
+      user_badges: {
+        Row: {
+          awarded_at: string
+          challenge_id: string | null
+          course_id: string | null
+          id: string
+          kind: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          awarded_at?: string
+          challenge_id?: string | null
+          course_id?: string | null
+          id?: string
+          kind?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          awarded_at?: string
+          challenge_id?: string | null
+          course_id?: string | null
+          id?: string
+          kind?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      whiteboard_items: {
+        Row: {
+          created_at: string
+          data: Json
+          id: string
+          kind: string
+          updated_at: string
+          user_id: string
+          x: number | null
+          y: number | null
+        }
+        Insert: {
+          created_at?: string
+          data?: Json
+          id?: string
+          kind: string
+          updated_at?: string
+          user_id: string
+          x?: number | null
+          y?: number | null
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: string
+          kind?: string
+          updated_at?: string
+          user_id?: string
+          x?: number | null
+          y?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "professional" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -242,6 +470,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "professional", "admin"],
+    },
   },
 } as const
