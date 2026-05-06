@@ -38,7 +38,7 @@ const cols = [
   {
     heading: "Tools",
     links: [
-      { label: "IDE", to: "/tools/ide" },
+      { label: "Whiteboard / Notebook", to: "/tools/notebook" },
       { label: "Labs", to: "/tools/labs" },
       { label: "Notebook", to: "/tools/notebook" },
       { label: "Dashboard", to: "/dashboard" },
